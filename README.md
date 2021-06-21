@@ -1,13 +1,13 @@
 # Code and data for stories on The Jakarta Post
 
-This repo contains the documentation of code and (backup) data I use for my work at The Jakarta Post. My older works are not well-documented, which makes this repo a non-exhaustive list.
+This repo contains the code and data I use for my work at The Jakarta Post. My older works are not well-documented, which makes this repo a non-exhaustive list.
 
-I mostly use [Datawrapper](https://www.datawrapper.de/) to create interactive web-based charts and [ggplot2](https://ggplot2.tidyverse.org/) in R to create static charts. To extract data from (non-image) pdf documents, I use [Tabula](https://tabula.technology/) either directly or through R.
+I use [Datawrapper](https://www.datawrapper.de/) to create interactive web-based charts and [ggplot2](https://ggplot2.tidyverse.org/) in R to create static charts. To extract data from (non-image) pdf documents, I use [Tabula](https://tabula.technology/) either directly or through R. Regardless, I mostly use R to wrangle and analyze the data.
 
 
 ## Data
 
-The data come mostly from official sources, such as Statistics Indonesia (BPS), Bank Indonesia (BI), the Finance Ministry and the Investment Coordinating Board (BKPM). When available, I use data from international organizations or private institutions.
+The data come mostly from official sources, such as Statistics Indonesia (BPS) and Bank Indonesia (BI). When available, I use data from international organizations or private institutions.
 
 
 ## Selected stories

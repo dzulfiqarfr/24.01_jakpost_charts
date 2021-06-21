@@ -1,6 +1,6 @@
 Population distribution
 ================
-2021-06-20
+2021-06-21
 
 This is a documentation of how I analyzed population distribution over
 time across Indonesia. I prepared this analysis for
@@ -564,7 +564,7 @@ ggplot(grdpPercap_mig_pop, aes(grdp_perCap, lft_in_prop)) +
     aes(fill = island_group, size = pop),
     pch = 21,
     color = "white",
-    alpha = 0.5
+    alpha = 0.65
   ) +
   geom_smooth(
     method = "lm",
@@ -583,7 +583,16 @@ ggplot(grdpPercap_mig_pop, aes(grdp_perCap, lft_in_prop)) +
     expand = c(0, 0),
     position = "right"
   ) +
-  scale_fill_brewer(palette = "Dark2", direction = -1) +
+  scale_fill_manual(
+    values = c(
+      "#266099",
+      "#1D97BF",
+      "#39D7E6",
+      "#30bf9b",
+      "#CC6D29",
+      "#F29D61"
+    )
+  ) +
   scale_size(range = c(5, 10)) +
   guides(
     size = "none",
