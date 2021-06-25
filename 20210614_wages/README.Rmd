@@ -1,6 +1,6 @@
 ---
 title: "Pandemic's impact on wage"
-date: "2021-06-20"
+date: "`r Sys.Date()`"
 output: github_document
 ---
 
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This is a documentation of how I analyzed the COVID-19 pandemic's impact on average net labor wage for [this article](https://www.thejakartapost.com/news/2021/06/14/covid-19-takes-severe-toll-on-wages.html).
+This is a documentation of how I analyzed the COVID-19 pandemic's impact on average net labor wage for [this article](https://www.thejakartapost.com/news/2021/06/14/covid-19-takes-severe-toll-on-wages.html){target="_blank"}.
 
 
 ## Packages
@@ -34,7 +34,6 @@ library(jsonlite)
 library(WDI)
 library(patchwork)
 library(ggtext)
-library(magick)
 ```
 
 
