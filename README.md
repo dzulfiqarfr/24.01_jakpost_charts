@@ -14,11 +14,11 @@ The data come mostly from official sources, such as Statistics Indonesia (BPS) a
 
 Date | Article | Documentation |  
 ------ | --------- | ------- |  
-2020-09-21 | [Female workers in Indonesia earn 23% less than their male peers](https://www.thejakartapost.com/news/2020/09/20/female-workers-in-indonesia-earn-23-less-than-their-male-peers.html) | [Data](/20200921_pay-gap) |  
-2020-12-22 | [[Yearender] Signed, sealed, delivered: RCEP concluded in turbulent year for global trade](https://www.thejakartapost.com/news/2020/12/22/yearender-signed-sealed-delivered-rcep-concluded-in-turbulent-year-for-global-trade.html) | [Code](/20201222_rcep-export) |  
-2021-05-23 | [Indonesia remains Java-centric despite Jokowi's infrastructure campaign](https://www.thejakartapost.com/news/2021/05/23/indonesia-remains-java-centric-despite-jokowis-infrastructure-campaign.html) | [Code](/20210523_population-distribution) |  
-2021-06-14 | [COVID-19 takes severe toll on wages](https://www.thejakartapost.com/news/2021/06/14/covid-19-takes-severe-toll-on-wages.html) | [Code](/20210614_wages) |  
-2021-06-25 | [Indonesian homeownership slides as affordability issues arise](https://www.thejakartapost.com/news/2021/06/28/indonesian-homeownership-slides-as-affordability-issues-arise.html) | [Code](/20210623_housing) |  
+2020-09-21 | [Female workers in Indonesia earn 23% less than their male peers](https://www.thejakartapost.com/news/2020/09/20/female-workers-in-indonesia-earn-23-less-than-their-male-peers.html){target="_blank"} | [Data](/20200921_pay-gap) |  
+2020-12-22 | [[Yearender] Signed, sealed, delivered: RCEP concluded in turbulent year for global trade](https://www.thejakartapost.com/news/2020/12/22/yearender-signed-sealed-delivered-rcep-concluded-in-turbulent-year-for-global-trade.html){target="_blank"} | [Code](/20201222_rcep-export) |  
+2021-05-23 | [Indonesia remains Java-centric despite Jokowi's infrastructure campaign](https://www.thejakartapost.com/news/2021/05/23/indonesia-remains-java-centric-despite-jokowis-infrastructure-campaign.html){target="_blank"} | [Code](/20210523_population-distribution) |  
+2021-06-14 | [COVID-19 takes severe toll on wages](https://www.thejakartapost.com/news/2021/06/14/covid-19-takes-severe-toll-on-wages.html){target="_blank"} | [Code](/20210614_wages) |  
+2021-06-28 | [Indonesian homeownership slides as affordability issues arise](https://www.thejakartapost.com/news/2021/06/28/indonesian-homeownership-slides-as-affordability-issues-arise.html){target="_blank"} | [Code](/20210623_housing) |  
 
 
 ## Note
