@@ -1,8 +1,9 @@
-Home ownership and housing affordability
+Home ownership and house prices
 ================
-2021-06-25
+2021-06-28
 
-I prepared this analysis for <a href="" target="_blank">this article</a>
+I prepared this analysis for
+<a href="https://www.thejakartapost.com/news/2021/06/28/indonesian-homeownership-slides-as-affordability-issues-arise.html" target="_blank">this article</a>
 on how home ownership has fallen since 1999 in Indonesia as
 affordability issues arise. Here, we take a look at home ownership,
 house price and mortgage data.
@@ -136,7 +137,7 @@ look at how house prices have changed over time. I have downloaded the
 data from
 <a href="https://www.bi.go.id/id/publikasi/laporan/Pages/SHPR-Triwulan-I-2021.aspx" target="_blank">this link</a>.
 The data shows how house prices in 18 cities across the country have
-changed since 2002. The data is quarterly. You can read the metadata
+changed since 2002. The data is quarterly. You can read the metadata at
 <a href="https://www.bi.go.id/id/statistik/Metadata/Survei/Documents/3-Metadata-SHPR-2016.pdf" target="_blank">this link</a>.
 
 However, the data stretches only as far back as 2012 and there are
@@ -223,12 +224,11 @@ glimpse(shpr_tidy)
 We also take a look at the mortgage data BPS collected in 2019. The data
 is disaggregated by province, income level, educational attainment, etc.
 But we will only use the regional data to keep it straightforward. The
-data is available in a pdf document and I have downloaded the data from
+data is available in a pdf document and I have downloaded it from
 <a href="https://bps.go.id/publication/2020/08/31/6a9e70d6154fde75499239e6/statistik-perumahan-dan-permukiman-2019.html" target="_blank">this link</a>.
 
-For both average monthly payments and term data, and just like any other
-data, there are a few missing values for West Nusa Tenggara, Maluku and
-North Maluku.
+For both average monthly payments and term data, there are a few missing
+values for West Nusa Tenggara, Maluku and North Maluku.
 
 We first read the average monthly payment data.
 
@@ -392,11 +392,14 @@ glimpse(mortgage_t_tidy)
 To see how home ownership has changed over time, we need to index the
 data. Here, I chose 1999 as the base year. Without an index chart, it
 will be difficult to gauge the downward trend in Indonesian home
-ownership since variations in the data are small enough.
+ownership since changes in the data are small enough.
 
-We can also highlight the top two and bottom two provinces in terms of
-change in home ownership and mute other provinces to give more nuance to
-the chart.
+I decided to filter out provinces with incomplete observations or have
+methodological differences.
+
+We can highlight the top two and bottom two provinces in terms of change
+in home ownership and mute other provinces to give more nuance to the
+chart.
 
 As a result, we can see the steepest decline was recorded in Jakarta,
 followed by Bali. Jakarta and Denpasar, the capital of Bali, are very
@@ -421,7 +424,7 @@ ownership_index <- ownership_tidy %>%
   mutate(index = (home_ownership / first(home_ownership)) * 100) %>% 
   ungroup()
 
-# filter countries with incomplete observations
+# drop provinces with incomplete observations
 ownership_count <- ownership_tidy %>% 
   count(prov, sort = T) %>% 
   dplyr::filter(n >= 22, prov != "Papua")
@@ -574,10 +577,10 @@ plot_index + plot_bottom10 +
 
 ### House price index
 
-While BI has provided the house price index broken down by house types,
-we will only look at the overall house price index. We also subset the
-annual percentage changes to gauge how house prices have moved from year
-to year.
+While BI has broken down the house price index by house type, we will
+only look at the overall house price index. We also subset the annual
+percentage changes to find out how house prices have moved from year to
+year.
 
 Here, we can see that the index has plateaued, recording a slower growth
 after it peaked in 2013. In Bandar Lampung, the index even showed annual
@@ -611,6 +614,11 @@ anno_cities <- shpr_sub %>%
       TRUE ~ cities
     )
   )
+
+anno_covid <- tribble(
+  ~label, ~x, ~y,
+  "COVID-19\npandemic\n\u2192", ymd("2020-02-01"), 18
+)
 
 # plot
 ggplot(shpr_sub, aes(date, shpr_growth)) +
@@ -665,14 +673,15 @@ ggplot(shpr_sub, aes(date, shpr_growth)) +
     color = "#757575",
     size = 2.5
   ) +
-  annotate(
-    "text",
-    x = ymd("2020-02-01"),
-    y = 21,
-    label = "COVID-19\npandemic\n\u2192",
+  geom_label(
+    data = anno_covid,
+    aes(x, y, label = label),
     size = 2.25,
     hjust = 1,
-    color = "#90A4AE"
+    color = "#90A4AE",
+     fill = "white",
+    label.size = 0,
+    label.padding = unit(0.025, "lines")
   ) +
   theme(
     text = element_text(size = 12),
@@ -710,7 +719,7 @@ on the term one chooses. So we can expect there is a linear relationship
 between the average term and the average monthly payments. Monthly
 payments tend to be smaller for mortgages with a longer term. That said,
 we can look at the data through a scatter plot by mapping the average
-term on the x-axis and average monthly payments in the y-axis.
+term on the x-axis and average monthly payments on the y-axis.
 
 Here, we can see the linear fit does quite a good job at showing the
 negative relationship between mortgage term and payments. Jakarta,
