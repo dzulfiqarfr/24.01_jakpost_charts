@@ -1,6 +1,6 @@
 Wealth gap in Indonesia narrows during pandemic
 ================
-2021-07-10
+2021-07-11
 
 I prepared this analysis for The Jakarta Post’s story on how the
 pandemic affects Indonesia’s wealth gap. The TLDR is as follows: wealth
@@ -909,7 +909,7 @@ summary(reg_top_wealth_stock)
 ```
 
 The result suggests we can expect the wealth share of top 10 percent to
-vary by 0.13 percentage points for every change in the share price
+vary by 0.11 percentage points for every change in the share price
 movement. But it is not statistically significant, which is expected in
 part due to our limited data. The *t*-value, for one, is pretty small.
 

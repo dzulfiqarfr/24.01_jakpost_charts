@@ -758,7 +758,7 @@ reg_top_wealth_stock <- lm(top_10 ~ share_price_chg, data = top_wealth_and_stock
 summary(reg_top_wealth_stock)
 ```
 
-The result suggests we can expect the wealth share of top 10 percent to vary by 0.13 percentage points for every change in the share price movement. But it is not statistically significant, which is expected in part due to our limited data. The *t*-value, for one, is pretty small.
+The result suggests we can expect the wealth share of top 10 percent to vary by 0.11 percentage points for every change in the share price movement. But it is not statistically significant, which is expected in part due to our limited data. The *t*-value, for one, is pretty small.
 
 ```{r plot top wealth share and stock price movement}
 ggplot(top_wealth_and_stock, aes(share_price_chg, top_10)) +
