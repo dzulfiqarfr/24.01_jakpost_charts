@@ -19,6 +19,7 @@ Date | Article | Documentation |
 2021-05-23 | [Indonesia remains Java-centric despite Jokowi's infrastructure campaign](https://www.thejakartapost.com/news/2021/05/23/indonesia-remains-java-centric-despite-jokowis-infrastructure-campaign.html) | [Code](/20210523_population-distribution) |  
 2021-06-14 | [COVID-19 takes severe toll on wages](https://www.thejakartapost.com/news/2021/06/14/covid-19-takes-severe-toll-on-wages.html) | [Code](/20210614_wages) |  
 2021-06-28 | [Indonesian homeownership slides as affordability issues arise](https://www.thejakartapost.com/news/2021/06/28/indonesian-homeownership-slides-as-affordability-issues-arise.html) | [Code](/20210623_housing) |  
+2021-07-12 | [Wealth gap narrows in Indonesia as stock market slumps, house prices grow](https://www.thejakartapost.com/news/2021/07/12/wealth-gap-narrows-in-indonesia-as-stock-market-slumps-house-prices-grow.html) | [Code](/20210708_wealth-inequality) |  
 
 
 ## Note
