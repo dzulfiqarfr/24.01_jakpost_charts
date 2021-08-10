@@ -420,9 +420,9 @@ vax_income_group_median
 #> 4 Low income                     1.22
 ```
 
-The median share of people who have received their first shot was 61.65
-percent for high income countries and 1.22 percent for low income
-countries. This shows a very wide gap.
+The median share of people who have been vaccinated was 61.65 percent
+for high income countries and 1.22 percent for low income countries.
+This shows a very wide gap.
 
 We can create one more chart to show the gap in vaccination rate by
 income group. We will plot vaccination rate by country with income group

@@ -338,7 +338,7 @@ vax_income_group_median <- vax_income_group %>%
 vax_income_group_median
 ```
 
-The median share of people who have received their first shot was `r vax_income_group_median[1, 2]` percent for high income countries and `r vax_income_group_median[4, 2]` percent for low income countries. This shows a very wide gap.
+The median share of people who have been vaccinated was `r vax_income_group_median[1, 2]` percent for high income countries and `r vax_income_group_median[4, 2]` percent for low income countries. This shows a very wide gap.
 
 We can create one more chart to show the gap in vaccination rate by income group. We will plot vaccination rate by country with income group mapped to the x-axis. We will also show the median vaccination rate for each income group using a cross bar.
 
