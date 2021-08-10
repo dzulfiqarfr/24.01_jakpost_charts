@@ -233,15 +233,16 @@ ggplot(weo_2021_revision, aes(x = revision, y = country)) +
 ## Vaccination campaign
 
 The IMF stated that the latest WEO showed a split among countries based
-on their vaccination rate. The higher the vacicnation rate the better
+on their vaccination rate. The higher the vaccination rate the better
 outlook they have.
 
 We can check how far the real GDP growth outlook varies with vaccination
 rate using vaccination data from
 <a href="https://github.com/owid/covid-19-data/tree/master/public/data" target="_blank">Our World in Data (OWID)</a>.
-We will take a look at the share of population partially vaccinated
-against COVID-19 at the latest date available. This metric shows the
-bare minimum in preventing people from contracting the virus.
+We will take a look at the total share of population vaccinated against
+COVID-19 at the latest date available. This metric takes into account
+both people who have been fully vaccinated and those who have received
+their first shot.
 
 ``` r
 url_owid <- "https://covid.ourworldindata.org/data/owid-covid-data.csv"
@@ -337,10 +338,10 @@ ggplot(weo_vax, aes(people_vaccinated_per_hundred, growth)) +
     title = "Better outlook for countries with higher vaccination rate",
     subtitle = str_c(
       "Real GDP growth outlook for 2021 & ",
-      "share of population partially vaccinated against COVID-19*\n",
+      "share of population vaccinated against COVID-19*\n",
       "(percent)"
     ),
-    x = "Share of population partially vaccinated*",
+    x = "Share of population vaccinated*",
     y = "Real GDP growth outlook",
     caption = str_c(
       glue("*At latest date available as of {today}"),
