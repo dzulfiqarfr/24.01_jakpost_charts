@@ -31,6 +31,7 @@ library(zoo)
 library(httr)
 library(jsonlite)
 library(ggrepel)
+library(ggtext)
 library(patchwork)
 ```
 
@@ -169,7 +170,7 @@ theme_dfr <- function(...,
       margin = margin(b = 5)
     ),
     plot.title.position = "plot",
-    plot.caption = element_text(
+    plot.caption = element_markdown(
       size = rel(0.7),
       color = "#BDBDBD",
       hjust = 0,
@@ -438,8 +439,8 @@ chart_cci + chart_rsi +
   plot_annotation(
     title = "Emergency curbs reverse recovery in consumer confidence, retail sales",
     caption = str_c(
-      "*July 2021 figure is an estimate\n",
-      "Source: Bank Indonesia (BI); The Jakarta Post analysis\n",
+      "\\*Last figure (July 2021) figure is an estimate<br>",
+      "Source: Bank Indonesia (BI); *The Jakarta Post* analysis<br>",
       "Chart: JP/Dzulfiqar Fathur Rahman"
     ),
     theme = theme_dfr()
@@ -850,7 +851,7 @@ chart_mobility_weighted <- ggplot(
     fontface = "bold"
   ) +
   labs(
-    subtitle = "By island group**", 
+    subtitle = "By region**", 
     x = NULL, 
     y = NULL
   ) +
@@ -957,7 +958,10 @@ annotation_text_province <- mobility_covid %>%
     )
   )
 
-chart_covid_mobitliy <- ggplot(mobility_covid, aes(cases_per_hundred_people, seven_day_average)) +
+chart_covid_mobitliy <- ggplot(
+  mobility_covid, 
+  aes(cases_per_hundred_people, seven_day_average)
+) +
   geom_hline(yintercept = 0, color = "#E68F7E") +
   geom_point(
     pch = 21,
@@ -1011,11 +1015,11 @@ We now join the charts.
 ```{r Patchwork mobility charts}
 chart_mobility_weighted + chart_covid_mobitliy +
   plot_annotation(
-    title = "Movement trend falls before govt tightens restrictions as cases rise",
-    subtitle = "Mobility to retail and recreation places* (percent)",
+    title = "Mobility falls before govt tightens restrictions as cases rise",
+    subtitle = "Number of visitors to retail and recreation places* (percentage change)",
     caption = str_c(
-      "*Change from January-February baseline smoothed to seven-day moving average **Weighted by population\n",
-      "Source: Google; BPS; BNPB; The Jakarta Post analysis\n",
+      "\\*Change from January-February baseline smoothed to seven-day moving average \\*\\*Weighted by population<br>",
+      "Source: Google; BPS; BNPB; *The Jakarta Post* analysis<br>",
       "Chart: JP/Dzulfiqar Fathur Rahman"
     ),
     theme = theme_dfr()
