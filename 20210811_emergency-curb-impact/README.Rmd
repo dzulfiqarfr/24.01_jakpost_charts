@@ -1,0 +1,1027 @@
+---
+title: "Untitled"
+output: github_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE,
+  message = FALSE,
+  fig.width = 6, 
+  fig.asp = 0.618,
+  fig.align = "center",
+  out.width = "70%",
+  dpi = 300,
+  comment = "#>"
+)
+```
+
+I prepared this analysis for a story on the impact of COVID-19 emergency curbs on the economy. To that end, we will take a look at the consumer confidence index and retail sales index. We also need to analyze community mobility data to see how people respond to the pandemic development before, during and after the government implements emergency curbs.
+
+
+## Packages
+
+```{r Load the packages}
+library(tidyverse)
+library(data.table)
+library(readxl)
+library(lubridate)
+library(zoo)
+library(httr)
+library(jsonlite)
+library(ggrepel)
+library(patchwork)
+```
+
+
+## Consumer confidence
+
+We can get the consumer confidence index data from [Bank Indonesia (BI)](https://www.bi.go.id/id/publikasi/laporan/Pages/SK-Juli-2021.aspx){target="_blank"}.
+
+```{r Get overall consumer confidence}
+# unzip("data/SK.zip", exdir = "data")
+
+cci_overall_raw <- read_excel(
+  "data/SK.xlsx",
+  sheet = "Tabel 1",
+  skip = 5,
+  na = c("-", "")
+)
+
+cci_overall_clean <- cci_overall_raw %>% 
+  select(-c(KETERANGAN:...3)) %>%
+  dplyr::filter(...4 == "Indeks Keyakinan Konsumen (IKK)") %>% 
+  select_if(function(x) {!all(is.na(x))}) %>% 
+  select(-c(...4, ncol(.)))
+
+cci_date <- seq(ymd("2012-01-01"), ymd("2021-07-01"), by = "1 month")
+
+names(cci_overall_clean)[1:ncol(cci_overall_clean)] <- as.character(cci_date)
+
+cci_overall_tidy <- cci_overall_clean %>% 
+  pivot_longer(
+    everything(),
+    names_to = "date",
+    values_to = "cci",
+    names_transform = list(date = ymd),
+    values_transform = list(cci = as.double)
+  ) %>% 
+  mutate(cci = round(cci, 2))
+
+glimpse(cci_overall_tidy)
+```
+
+We have read the overall consumer confidence index data, which stretch as far back as 2012. We can now check the July figure to see how the emergency curbs, which the government implemented starting from July 3, affected consumer confidence.
+
+```{r Check latest consumer confidece}
+tail(cci_overall_tidy, 6)
+```
+
+The consumer confidence index fell to 80.20 in July. This is below the 100-point threshold separating optimistic and pessimistic territory.
+
+BI also provides consumer confidence broken down by income group. Although they usually move together, it's not always clear cut which income group is the least or most optimistic.
+
+So we will also import the consumer confidence by income group data.
+
+```{r Get consumer confidence by income group}
+cci_income_raw <- read_excel(
+  "data/SK.xlsx",
+  sheet = "Tabel 2",
+  skip = 7,
+  na = c("-", "")
+)
+
+income_group_name_en <- c(
+  "Pengeluaran Rp1 - 2 juta" = "Rp 1-2 million",
+  "Pengeluaran Rp2,1 - 3 juta" = "Rp 2.1-3 million",
+  "Pengeluaran Rp3,1 - 4 juta" = "Rp 3.1-4 million",
+  "Pengeluaran Rp4,1 - 5 juta" = "Rp 4.1-5 million",
+  "Pengeluaran >Rp5 juta" = "Above Rp 5 million"
+)
+
+cci_income_clean <- cci_income_raw %>%
+  fill(...3) %>% 
+  dplyr::filter(...3 == "Indeks Keyakinan Konsumen (IKK)", !is.na(...4)) %>% 
+  select(-c(KETERANGAN:...3, ncol(.))) %>% 
+  select_if(function(x) {!all(is.na(x))}) %>%
+  rename(income_group = ...4) %>% 
+  mutate(
+    income_group_id = c("1_2", "2.1_3", "3.1_4", "4.1_5", "above_5"),
+    income_group = str_replace_all(income_group, income_group_name_en)
+  ) %>% 
+  select(income_group_id, income_group, `2012`:ncol(.))
+
+names(cci_income_clean)[3:ncol(cci_income_clean)] <- as.character(cci_date)
+
+cci_income_tidy <- cci_income_clean %>% 
+  pivot_longer(
+    3:ncol(.),
+    names_to = "date",
+    names_transform = list(date = ymd),
+    values_to = "cci",
+    values_transform = list(cci = as.double)
+  ) %>% 
+  mutate(cci = round(cci, 2))
+
+glimpse(cci_income_tidy)
+```
+
+Now we can check confidence among consumers depending on their income group.
+
+```{r Check latest concumer confidence by income group}
+cci_income_tidy %>% 
+  dplyr::filter(date == last(date)) %>% 
+  arrange(cci)
+```
+
+Confidence across all income groups fell into the pessimistic territory. But consumers with income between Rp 1 million and Rp 2 million posted the lowest confidence at 74.80.
+
+We will create a line chart to show how the latest restriction affected consumer confidence. But we will first define a function to create a custom ggplot2 theme.
+
+```{r Define custom ggplot2 theme}
+theme_dfr <- function(..., 
+                      base_size = 12, 
+                      rel_size = 0.75) {
+  
+  color_primary <- "#757575"
+  color_primary_light <- "#E0E0E0"
+  
+  theme(
+    text = element_text(size = base_size, color = color_primary),
+    axis.text = element_text(size = rel(rel_size), color = color_primary),
+    axis.line = element_blank(),
+    axis.ticks.x = element_line(color = color_primary_light),
+    axis.ticks.y = element_blank(),
+    panel.background = element_rect(fill = "#FFFFFF"),
+    panel.grid.major.x  = element_blank(),
+    panel.grid.major.y = element_line(color = color_primary_light),
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(
+      face = "bold", 
+      color = "#000000", 
+      size = rel(1),
+      margin = margin(b = 5)
+    ),
+    plot.subtitle = element_text(
+      size = rel(rel_size), 
+      color = color_primary, 
+      margin = margin(b = 5)
+    ),
+    plot.title.position = "plot",
+    plot.caption = element_text(
+      size = rel(0.7),
+      color = "#BDBDBD",
+      hjust = 0,
+      margin = margin(t = 5)
+    ),
+    plot.caption.position = "plot",
+    ...
+  )
+  
+}
+```
+
+Since we are not interested in the entire historical trend in the data, we will plot only figures in the past five years and thus, drop observations prior to 2017.
+
+```{r Plot overall consumer confidence}
+cci_overall_filtered <- cci_overall_tidy %>% 
+  mutate(year = year(date)) %>% 
+  dplyr::filter(year >= 2017) %>% 
+  select(-year)
+
+annotation_range_psbb <- tribble(
+  ~x, ~xend, ~y, ~yend,
+  ymd("2020-04-01"), ymd("2020-05-01"), 140, 140
+)
+
+annotation_text_confidence <- tribble(
+  ~x, ~y, ~label,
+  ymd("2017-06-01"), 110, "Optimistic \u2191",
+  ymd("2017-06-01"), 90, "Pessimistic \u2193"
+)
+
+color_annotation <- "#BDBDBD"
+
+chart_cci <- ggplot(cci_overall_filtered, aes(date, cci)) +
+  annotate(
+    "rect",
+    xmin = ymd("2020-04-01"),
+    xmax = ymd("2020-05-01"),
+    ymin = 40, 
+    ymax = 140,
+    fill = color_annotation,
+    alpha = 0.25
+  ) +
+  annotate(
+    "rect",
+    xmin = ymd("2021-07-01"),
+    xmax = ymd("2021-08-01"),
+    ymin = 40, 
+    ymax = 140,
+    fill = color_annotation,
+    alpha = 0.25
+  ) +
+  geom_hline(yintercept = 100, color = "#E68F7E") +
+  geom_vline(
+    xintercept = ymd("2020-03-01"), 
+    color = color_annotation, 
+    lty = "dashed"
+  ) +
+  geom_line(color = "#2477B3", lwd = 0.75) +
+  scale_x_date(
+    breaks = seq(ymd("2017-01-01"), ymd("2021-01-01"), by = "1 year"),
+    labels = c("2017", str_c("'", seq(18, 21)))
+  ) +
+  scale_y_continuous(
+    breaks = seq(40, 140, 20),
+    limits = c(40, 140),
+    position = "right"
+  ) +
+  geom_text(
+    data = annotation_text_confidence,
+    aes(x, y, label = label),
+    size = 3,
+    hjust = 0,
+    vjust = 0.5,
+    color = color_annotation
+  ) +
+  geom_text(
+    data = tibble(x = ymd("2020-03-01"), y = 135, label = "COVID-19 pandemic"),
+    aes(x, y, label = label),
+    size = 3,
+    hjust = 1,
+    vjust = 0.5,
+    nudge_x = -25,
+    color = color_annotation
+  ) +
+  geom_text_repel(
+    data = tibble(
+      x = ymd("2020-05-01"), 
+      y = 70, 
+      label = "Large-scale\nsocial restrictions"
+    ),
+    aes(x, y, label = label),
+    size = 3,
+    hjust = 1,
+    vjust = 0.5,
+    nudge_x = -175,
+    color = color_annotation
+  ) +
+  geom_text_repel(
+    data = tibble(
+      x = ymd("2021-08-01"), 
+      y = 130, 
+      label = "Emergency\ncurbs"
+    ),
+    aes(x, y, label = label),
+    size = 2.75,
+    hjust = 1,
+    vjust = 0.5,
+    nudge_x = -75,
+    color = color_annotation
+  ) +
+  labs(
+    subtitle = "Consumer confidence index",
+    x = NULL,
+    y = NULL
+  ) +
+  theme_dfr()
+
+chart_cci
+```
+
+The chart helps us see clearly that consumer confidence fell drastically when regional administrations imposed the large-scale social restrictions during the first few months of the pandemic last year and when the government tightened mobility restrictions in July. More importantly, the emergency curbs halted the recovery progress.
+
+
+## Retail sales
+
+We can also download the retail sales index data from [BI](https://www.bi.go.id/id/publikasi/laporan/Pages/SPE_Juni_2021.aspx){target="_blank"}.
+
+```{r Get retail sales}
+# unzip("data/spe.zip", exdir = "data")
+
+rsi_complete_raw <- read_excel(
+  "data/spe.xlsx", 
+  sheet = "Tabel 1",
+  skip = 3
+) 
+
+rsi_complete_clean <- rsi_complete_raw %>% 
+  dplyr::filter(!is.na(`2012`), !is.na(DESKRIPSI)) %>% 
+  select_if(function(x) {!all(is.na(x))}) %>% 
+  select(-DESCRIPTION) %>% 
+  rename(category = DESKRIPSI)
+
+# follow the original order for easier `mutate()`-ing
+rsi_category_name_en <- rsi_complete_clean %>% 
+  select(category) %>% 
+  mutate(
+    category_en = c(
+      "Vehicle spare parts and accessories",
+      "Food, beverages and tobacco",
+      "Vehicle fuels",
+      "Information and communication tools",
+      "Other household supplies",
+      "Cultural and recreational goods",
+      "Other goods",
+      "Clothing",
+      "Total"
+    )
+  )
+
+rsi_date <- seq(ymd("2012-01-01"), ymd("2021-07-01"), by = "1 month")
+
+names(rsi_complete_clean)[2:ncol(rsi_complete_clean)] <- as.character(rsi_date)
+
+rsi_complete_tidy <- rsi_complete_clean %>% 
+  pivot_longer(
+    2:ncol(.),
+    names_to = "date",
+    names_transform = list(date = ymd),
+    values_to = "rsi",
+    values_transform = list(rsi = as.double)
+  ) %>% 
+  mutate(
+    category = str_replace_all(category, deframe(rsi_category_name_en)),
+    rsi = round(rsi, 2)
+  )
+
+glimpse(rsi_complete_tidy)
+```
+
+Having imported the data, we can now calculate the annual percentage change in the retail sales index.
+
+```{r Calculate annual percentage change in retail sales}
+rsi_complete_chg <- rsi_complete_tidy %>% 
+  mutate(month = month(date)) %>% 
+  group_by(category, month) %>% 
+  mutate(
+    diff_yoy = rsi - dplyr::lag(rsi, 1),
+    pct_chg_yoy = round(diff_yoy / dplyr::lag(rsi, 1) * 100, digits = 2)
+  ) %>% 
+  ungroup() %>% 
+  select(-c(month, diff_yoy))
+
+glimpse(rsi_complete_chg)
+```
+
+We can now check the latest annual percentage change in retail sales index across categories.
+
+```{r Check latest retail sales}
+rsi_complete_chg %>% 
+  dplyr::filter(date == last(date)) %>% 
+  arrange(desc(pct_chg_yoy))
+```
+
+Aside from vehicle fuels, the retail sales posted sharp declines in July from a year earlier. The overall retail sales index was estimated to fall by 6.23 percent year-on-year (yoy). The steepest fall was recorded in information and communication tools.
+
+We can create a line chart to show the latest trend and how it compares with the one during large-scale social restrictions last year. Like with the consumer confidence chart, we will filter out observations prior to 2017. We will also plot only the total figures.
+
+```{r Plot retail sales}
+rsi_total_filtered <- rsi_complete_chg %>% 
+  mutate(year = year(date)) %>% 
+  dplyr::filter(year >= 2017, category == "Total") %>% 
+  select(-c(category, year))
+
+chart_rsi <- ggplot(rsi_total_filtered, aes(date, pct_chg_yoy)) +
+  annotate(
+    "rect",
+    xmin = ymd("2020-04-01"),
+    xmax = ymd("2020-05-01"),
+    ymin = -45, 
+    ymax = 30,
+    fill = color_annotation,
+    alpha = 0.25
+  ) +
+  annotate(
+    "rect",
+    xmin = ymd("2021-07-01"),
+    xmax = ymd("2021-08-01"),
+    ymin = -45, 
+    ymax = 30,
+    fill = color_annotation,
+    alpha = 0.25
+  ) +
+  geom_hline(yintercept = 0, color = "#E68F7E") +
+  geom_vline(
+    xintercept = ymd("2020-03-01"), 
+    color = color_annotation, 
+    lty = "dashed"
+  ) +
+  geom_line(color = "#2477B3", lwd = 0.75) +
+  scale_x_date(
+    breaks = seq(ymd("2017-01-01"), ymd("2021-01-01"), by = "1 year"),
+    labels = c("2017", str_c("'", seq(18, 21)))
+  ) +
+  scale_y_continuous(
+    breaks = seq(-45, 30, 15),
+    limits = c(-45, 30),
+    position = "right"
+  ) +
+  labs(
+    subtitle = "Retail sales index* (annual percentage change)",
+    x = NULL,
+    y = NULL
+  ) +
+  theme_dfr()
+
+chart_rsi
+```
+
+We can see from the chart that the fall in retail sales was not as steep as it was during the large-scale social restrictions. However, this reversed the recovery trend.
+
+We can join the consumer confidence and retail sales charts to make a single chart.
+
+```{r Patchwork consumer confidence and retail sales charts}
+chart_cci + chart_rsi +
+  plot_annotation(
+    title = "Emergency curbs reverse recovery in consumer confidence, retail sales",
+    caption = str_c(
+      "*July 2021 figure is an estimate\n",
+      "Source: Bank Indonesia (BI); The Jakarta Post analysis\n",
+      "Chart: JP/Dzulfiqar Fathur Rahman"
+    ),
+    theme = theme_dfr()
+  )
+```
+
+```{r Save consumer confidence and retail sales patchwork}
+ggsave("fig/cci-rsi_chart.png", width = 6, height = 3.708, dpi = 300)
+```
+
+
+## Mobility to retail and recreation places
+
+The charts on consumer confidence and retail sales suggest both metrics tend to go down when the government tightens mobility restrictions. One way to test this assumption is to check it with community mobility data from [Google](https://www.google.com/covid19/mobility/){target="_blank"}.
+
+```{r Get community mobility}
+path_mobility_data <- "data/mobility_indonesia_raw.csv"
+
+if (!file.exists(path_mobility_data)) {
+  
+  url_mobility <- "https://www.gstatic.com/covid19/mobility/Global_Mobility_Report.csv"
+  
+  mobility_global_raw <- fread(
+    url_mobility,
+    select = c(
+      "country_region",
+      "sub_region_1",
+      "date", 
+      "retail_and_recreation_percent_change_from_baseline"
+    )
+  )
+  
+  mobility_idn_raw <- mobility_global_raw %>% 
+    dplyr::filter(country_region == "Indonesia")
+  
+  write_csv(mobility_idn_raw, "data/mobility_indonesia_raw.csv")
+  
+} else {
+  
+  mobility_idn_raw <- fread(path_mobility_data)
+  
+}
+
+glimpse(mobility_idn_raw)
+```
+
+We need to smooth the data to a seven-day moving average to separate the movement trend from day-to-day fluctuations.
+
+```{r Explore mobility to retail and recreation places}
+mobility_idn_avg <- mobility_idn_raw %>% 
+  mutate(
+    across(everything(), function(x) {na_if(x, "")}),
+    sub_region_1 = if_else(is.na(sub_region_1), "National", sub_region_1),
+    sub_region_1 = str_remove_all(sub_region_1, "Special Region of "),
+    sub_region_1 = str_replace_all(
+      sub_region_1, 
+      "^South East Sulawesi$", 
+      "Southeast Sulawesi"
+    )
+  ) %>% 
+  group_by(sub_region_1) %>% 
+  mutate(
+    seven_day_average = rollmean(
+      retail_and_recreation_percent_change_from_baseline,
+      k = 7, 
+      fill = NA, 
+      align = "right"
+    )
+  ) %>% 
+  ungroup()
+
+glimpse(mobility_idn_avg)
+```
+
+We can now plot the smoothed mobility at national level to gauge the movement trend nationwide.
+
+```{r Plot mobility to retail and recreation places}
+mobility_ntl_avg <- mobility_idn_avg %>% 
+  dplyr::filter(sub_region_1 == "National")
+
+ggplot(mobility_ntl_avg, aes(date, seven_day_average)) +
+  geom_line(show.legend = FALSE) +
+  scale_x_date(
+    breaks = seq(ymd("2020-03-01"), ymd("2021-08-01"), by = "1 month"),
+    labels = c(
+      "Mar\n2020",
+      format(seq(ymd("2020-04-01"), ymd("2020-12-01"), by = "1 month"), "%b"),
+      "Jan\n'21",
+      format(seq(ymd("2021-02-01"), ymd("2021-08-01"), by = "1 month"), "%b")
+    )
+  ) +
+  labs(x = NULL, y = NULL) +
+  theme_dfr()
+```
+
+The mobility data suggest that people reduced their visits to retail and recreation places even before the government started tightening the restrictions as the pandemic began to worsen. That marks a reverse from a brief moment of a return to pre-pandemic level between April and June. But the decline was not as steep as either during the large-scale social restrictions last year.
+
+Now that the government has gradually relaxed the restrictions and cases started declining in some places, people started returning to shopping centers and other recreation places.
+
+But the trend is somewhat different from one province to another as cases and deaths remained high in some places. We can see this trend if we compare mobility by island group. To that end, we need to average the mobility by island group and weight it by population.
+
+First, we need to get population data from Statistics Indonesia (BPS). The agency provides a population estimate for the country broken down by sex and province from the 2015 Intercensal Survey (SUPAS).
+
+```{r Get population data}
+api_key_bps <- Sys.getenv("api_key_bps")
+
+# Store var id for querying population data and separating `id` column later
+var_id <- "1886"
+
+population_req <- GET(
+  "https://webapi.bps.go.id/v1/api/list",
+  query = list(
+    model = "data",
+    domain = "0000",
+    var = var_id,
+    key = api_key_bps
+  )
+)
+
+population_parsed <- content(population_req, type = "text") %>% 
+  fromJSON()
+
+# Add anchor to id values to prevent errors when replacing them with the labels
+add_anchor <- function(x, list) {
+  
+  df <- as_tibble(list[[x]])
+  
+  df_anchored <- df %>% 
+    mutate(val = str_c("^", as.character(val), "$"))
+  
+}
+
+# `turvar` contains sex values, `vervar` province values, `tahun` year
+id_names <- c("turvar", "vervar", "tahun")
+
+id_list <- map(id_names, add_anchor, list = population_parsed)
+
+id_sex <- id_list[[1]]
+id_province <- id_list[[2]]
+id_year <- id_list[[3]]
+
+# Follow the order in the `id_province` for easier `mutate()`-ing
+province_name_en <- c(
+  "Indonesia",
+  "Aceh",
+  "North Sumatra",
+  "West Sumatra",
+  "Riau",
+  "Jambi",
+  "South Sumatra",
+  "Bengkulu",
+  "Lampung",
+  "Bangka Belitung Islands",
+  "Riau Islands",
+  "Jakarta",
+  "West Java",
+  "Central Java",
+  "Yogyakarta",
+  "East Java",
+  "Banten",
+  "Bali",
+  "West Nusa Tenggara",
+  "East Nusa Tenggara",
+  "West Kalimantan",
+  "Central Kalimantan",
+  "South Kalimantan",
+  "East Kalimantan",
+  "North Kalimantan",
+  "North Sulawesi",
+  "Central Sulawesi",
+  "South Sulawesi",
+  "Southeast Sulawesi",
+  "Gorontalo",
+  "West Sulawesi",
+  "Maluku",
+  "North Maluku",
+  "West Papua",
+  "Papua"
+)
+
+id_province_en <- id_province %>% 
+  mutate(
+    province_en = province_name_en,
+    island_group_1 = case_when(
+      province_en == "Indonesia" ~ "Indonesia",
+      str_detect(val, "\\^[1|2]") ~ "Sumatra",
+      str_detect(val, "\\^3") ~ "Java",
+      str_detect(val, "\\^5") ~ "Bali & Nusa Tenggara",
+      str_detect(val, "\\^6") ~ "Kalimantan",
+      str_detect(val, "\\^7") ~ "Sulawesi",
+      str_detect(val, "\\^[8|9]") ~ "Maluku & Papua"
+    ),
+    island_group_2 = case_when(
+      province_en == "Indonesia" ~ "Indonesia",
+      str_detect(val, "\\^[3|5]") ~ "Java & Bali",
+      TRUE ~ "Other"
+    )
+  )
+
+id_sex_en <- id_sex %>% 
+  mutate(sex_en = c("Men", "Women", "Total")) %>% 
+  select(-label)
+
+population_raw <- as_tibble(population_parsed$datacontent)
+
+population_tidy <- population_raw %>% 
+  pivot_longer(
+    everything(),
+    names_to = "id",
+    values_to = "population"
+  ) %>% 
+  separate(
+    id,
+    into = c("province_id", "sex_year_id"),
+    sep = var_id
+  ) %>% 
+  mutate(
+    province = str_replace_all(
+      province_id, 
+      deframe(id_province_en[, c(1, 3)])
+    ),
+    island_group_1 = str_replace_all(
+      province_id, 
+      deframe(id_province_en[, c(1, 4)])
+    ),
+    island_group_2 = str_replace_all(
+      province_id, 
+      deframe(id_province_en[, c(1, 5)])
+    ),
+    sex = str_sub(sex_year_id, 1, 3),
+    sex = str_replace_all(sex, deframe(id_sex_en)),
+    year = str_sub(sex_year_id, 4, 6),
+    year = str_replace_all(year, deframe(id_year))
+  ) %>% 
+  select(
+    province_id,
+    province, 
+    island_group_1,
+    island_group_2, 
+    sex, 
+    year, 
+    population
+  )
+
+glimpse(population_tidy)
+```
+
+Having imported the population data and adding island groups to it, we can now calculate the projected total population for 2020 by island group.
+
+```{r Calculate population by island group}
+population_island_2020 <- population_tidy %>% 
+  dplyr::filter(
+    island_group_2 != "Indonesia",
+    sex == "Total",
+    year == "2020"
+  ) %>% 
+  group_by(island_group_2) %>% 
+  summarize(population = sum(population)  ) %>% 
+  ungroup() %>% 
+  mutate(
+    total = sum(population),
+    population_share = population / total
+  ) %>% 
+  select(-total)
+
+glimpse(population_island_2020)
+```
+
+We will now calculate the average mobility by island group and then weight it by population.
+
+```{r Calculate average mobility by island group}
+mobility_province <- mobility_idn_avg %>% 
+  dplyr::filter(sub_region_1 != "National")
+
+# Add anchor to province names to prevent errors when replacing it with
+# island group names
+id_province_en_anchored <- id_province_en %>% 
+  mutate(province_en = str_c("^", province_en, "$"))
+
+mobility_island <- mobility_province %>% 
+  mutate(
+    island_group_2 = str_replace_all(
+      sub_region_1, 
+      deframe(id_province_en_anchored[, c(3, 5)])
+    )
+  ) %>% 
+  group_by(island_group_2, date) %>% 
+  summarize(
+    retail_recreation_mobility = mean(
+      retail_and_recreation_percent_change_from_baseline, 
+      na.rm = TRUE
+    )
+  ) %>% 
+  ungroup()
+
+mobility_population <- mobility_island %>% 
+  left_join(population_island_2020, by = "island_group_2")
+
+mobility_island_weighted <- mobility_population %>% 
+  group_by(island_group_2) %>% 
+  mutate(
+    retail_recreation_mob_w = retail_recreation_mobility * population_share,
+    seven_day_average = rollmean(
+      retail_recreation_mob_w,
+      k = 7, 
+      fill = NA, 
+      align = "right"
+    )
+  ) %>% 
+  ungroup()
+
+glimpse(mobility_island_weighted)
+```
+
+We can now plot the weighted mobility average.
+
+```{r Plot weighted mobility by island group}
+chart_mobility_weighted <- ggplot(
+  mobility_island_weighted, 
+  aes(date, seven_day_average, color = island_group_2)
+) +
+  annotate(
+    "rect",
+    xmin = ymd("2020-04-01"),
+    xmax = ymd("2020-05-01"),
+    ymin = -40, 
+    ymax = 10,
+    fill = color_annotation,
+    alpha = 0.25
+  ) +
+  annotate(
+    "rect",
+    xmin = ymd("2021-07-01"),
+    xmax = last(mobility_island_weighted$date),
+    ymin = -40, 
+    ymax = 10,
+    fill = color_annotation,
+    alpha = 0.25
+  ) +
+  geom_hline(yintercept = 0, color = "#E68F7E") +
+  geom_vline(
+    xintercept = ymd("2020-03-02"), 
+    color = color_annotation, 
+    lty = "dashed"
+  ) +
+  geom_line(
+    lwd = 0.75,
+    show.legend = FALSE
+  ) +
+  scale_x_date(
+    breaks = seq(ymd("2020-03-01"), ymd("2021-08-01"), by = "3 month"),
+    labels = c("Mar\n2020", "Jun", "Sep", "Dec", "Mar\n'21", "Jun")
+  ) +
+  scale_y_continuous(
+    breaks = seq(-40, 10, 10),
+    limits = c(-40, 10),
+    position = "right"
+  ) +
+  scale_color_manual(
+    values = c("Java & Bali" = "#2477B3", "Other" = "#55CBF2")
+  ) +
+  geom_text(
+    data = tibble(x = ymd("2020-03-01"), y = 7.5, label = "COVID-19 pandemic"),
+    aes(x, y, label = label),
+    size = 3,
+    hjust = 0,
+    vjust = 0.5,
+    nudge_x = 5,
+    color = color_annotation
+  ) +
+  geom_text_repel(
+    data = tibble(
+      x = ymd("2020-04-01"), 
+      y = -35, 
+      label = "Large-scale\nsocial restrictions"
+    ),
+    aes(x, y, label = label),
+    size = 3,
+    hjust = 0,
+    vjust = 0.5,
+    nudge_x = 50,
+    color = color_annotation
+  ) +
+  geom_text_repel(
+    data = tibble(
+      x = ymd("2021-08-01"), 
+      y = -25, 
+      label = "Emergency curbs"
+    ),
+    aes(x, y, label = label),
+    size = 3,
+    hjust = 1,
+    vjust = 0.5,
+    nudge_x = -50,
+    color = color_annotation
+  ) +
+  geom_text(
+    data = tibble(
+      x = rep(ymd("2021-05-01"), 2),
+      y = c(4, -18.5),
+      label = c("Other", "Java & Bali")
+    ),
+    aes(x, y, label = label),
+    size = 3,
+    hjust = 0.5,
+    vjust = 0.5,
+    color = c("#55CBF2", "#2477B3"),
+    fontface = "bold"
+  ) +
+  labs(
+    subtitle = "By island group**", 
+    x = NULL, 
+    y = NULL
+  ) +
+  theme_dfr()
+
+chart_mobility_weighted
+```
+
+The chart shows that visits to retail and recreation places outside Java and Bali did not fall as steep. But the trend is similar: people tend to reduce their mobility even before the government tightened restrictions.
+
+We can now compare movement trends and see how they vary with COVID-19 cases.
+
+```{r Get COVID cases}
+path_covid_data <- "data/covid_province_raw.csv"
+
+if (!file.exists(path_covid_data)) {
+  
+  url_covid <- "https://data.covid19.go.id/public/api/prov.json"
+  
+  covid_parsed <- fromJSON(url_covid)
+  
+  covid_raw <- as_tibble(covid_parsed$list_data)
+  
+  covid_raw %>% 
+    select(-c(jenis_kelamin, kelompok_umur, lokasi, penambahan)) %>% 
+    write_csv(path_covid_data)
+  
+} else {
+  
+  covid_raw <- read_csv(path_covid_data)
+  
+}
+
+# Add anchor to prevent errors when replacing province names
+id_province_idn_anchored <- id_province_en %>% 
+  mutate(label = str_c("^", label, "$"))
+
+covid_tidy <- covid_raw %>% 
+  select(key, jumlah_kasus, jumlah_meninggal) %>% 
+  mutate(
+    key = str_replace_all(
+      key,
+      c("KEPULAUAN" = "KEP.", "DAERAH ISTIMEWA" = "DI")
+    ),
+    key = str_replace_all(key, deframe(id_province_idn_anchored[, c(2, 3)]))
+  ) %>% 
+  dplyr::filter(key != "PROVINSI JAWA TENGAH") # This observation seems like a bug
+
+glimpse(covid_tidy)
+```
+
+We first need to adjust cases and deaths by population to better reflect the density and thus yield more accurate comparison.
+
+```{r Caculate cases and deaths by population}
+population_province_2020 <- population_tidy %>% 
+  dplyr::filter(
+    province != "Indonesia",
+    sex == "Total",
+    year == "2020"
+  )
+
+covid_population <- covid_tidy %>% 
+  left_join(population_province_2020, by = c("key" = "province")) %>% 
+  select(-c(province_id, sex, year))
+
+covid_adjusted <- covid_population %>% 
+  mutate(
+    cases_per_hundred_people = jumlah_kasus / population * 100,
+    deaths_per_hundred_people = jumlah_meninggal / population * 100
+  )
+
+glimpse(covid_adjusted)
+```
+
+We can now fit a linear model to see how cases and mobility interact. But first, we need to smooth the mobility data by province and then filter the latest observation.
+
+```{r Fit linear model to mobility and COVID cases}
+mobility_latest <- mobility_province %>% 
+  dplyr::filter(date == last(date))
+
+mobility_covid <- mobility_latest %>% 
+  left_join(covid_adjusted, by = c("sub_region_1" = "key"))
+
+mobility_covid_lm <- lm(
+  seven_day_average ~ log(cases_per_hundred_people), 
+  data = mobility_covid
+)
+
+summary(mobility_covid_lm)
+```
+
+We get a statistically significant result. While the fitted values can capture the linear relationship well, it does not really explain the variation as reflected in the low R-squared. But this is enough to provide us with some confidence.
+
+We can now plot cases vs mobility.
+
+```{r Plot COVID cases and mobility}
+annotation_text_province <- mobility_covid %>% 
+  dplyr::filter(
+    sub_region_1 %in% c(
+      "Bali", 
+      "Jakarta",
+      "Gorontalo", 
+      "Aceh"
+    )
+  )
+
+chart_covid_mobitliy <- ggplot(mobility_covid, aes(cases_per_hundred_people, seven_day_average)) +
+  geom_hline(yintercept = 0, color = "#E68F7E") +
+  geom_point(
+    pch = 21,
+    fill = "#36A3D9",
+    color = "white",
+    alpha = 0.75,
+    size = 3
+  ) +
+  geom_text(
+    data = annotation_text_province, 
+    aes(label = sub_region_1),
+    size = 3,
+    hjust = 1,
+    vjust = 0.5,
+    color = color_annotation,
+    nudge_x = 0.025,
+    nudge_y = 5
+  ) +
+  geom_smooth(
+    method = "lm",
+    se = FALSE,
+    lty = "dashed",
+    color = "#2477B3",
+    lwd = 0.75
+  ) +
+  scale_x_log10(
+    breaks = c(400, 1000, 4000, 10000),
+    labels = c(400, "1,000", "4,000", "10,000"),
+    limits = c(400, 10000)
+  ) +
+  scale_y_continuous(
+    breaks = seq(-50, 25, 25),
+    limits = c(-50, 25)
+  ) +
+  labs(
+    subtitle = "By province (at latest date available)",
+    x = "COVID-19 cases per 100 people (log scale)",
+    y = "Mobility"
+  ) +
+  theme_dfr() +
+  theme(
+    axis.title = element_text(size = rel(0.75)),
+    panel.grid.major.x = element_line(color = "#E0E0E0")
+  )
+
+chart_covid_mobitliy
+```
+
+We now join the charts.
+
+```{r Patchwork mobility charts}
+chart_mobility_weighted + chart_covid_mobitliy +
+  plot_annotation(
+    title = "Movement trend falls before govt tightens restrictions as cases rise",
+    subtitle = "Mobility to retail and recreation places* (percent)",
+    caption = str_c(
+      "*Change from January-February baseline smoothed to seven-day moving average **Weighted by population\n",
+      "Source: Google; BPS; BNPB; The Jakarta Post analysis\n",
+      "Chart: JP/Dzulfiqar Fathur Rahman"
+    ),
+    theme = theme_dfr()
+  )
+```
+
+```{r Save mobility patchwork}
+ggsave("fig/mobility_chart.png", width = 6, height = 3.708, dpi = 300)
+```
