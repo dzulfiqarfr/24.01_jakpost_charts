@@ -19,6 +19,7 @@ Date | Article | Documentation |
 2021-06-28 | [Indonesian homeownership slides as affordability issues arise](https://www.thejakartapost.com/news/2021/06/28/indonesian-homeownership-slides-as-affordability-issues-arise.html) | [Code](/20210623_housing) |  
 2021-07-12 | [Wealth gap narrows in Indonesia as stock market slumps, house prices grow](https://www.thejakartapost.com/news/2021/07/12/wealth-gap-narrows-in-indonesia-as-stock-market-slumps-house-prices-grow.html) | [Code](/20210708_wealth-inequality) |  
 2021-08-01 | [Slow vaccination takes toll on Indonesia in uneven global recovery](https://www.thejakartapost.com/news/2021/08/01/slow-vaccination-takes-toll-on-indonesia-in-uneven-global-recovery.html) | [Code](/20210729_lopsided-recovery) |  
+2021-08-12 | [Emergency curbs reverse recovery in consumer confidence, retail sales](https://www.thejakartapost.com/news/2021/08/12/emergency-curbs-reverse-recovery-in-consumer-confidence-retail-sales.html) | [Code](/20210811_emergency-curb-impact) |  
 
 
 ## Note

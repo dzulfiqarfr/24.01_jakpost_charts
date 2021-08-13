@@ -1,28 +1,17 @@
----
-title: "Emergency curbs reverse recovery in consumer confidence and retail sales"
-output: github_document
----
+Emergency curbs reverse recovery in consumer confidence and retail sales
+================
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  echo = TRUE,
-  collapse = TRUE,
-  message = FALSE,
-  fig.width = 6, 
-  fig.asp = 0.618,
-  fig.align = "center",
-  out.width = "70%",
-  dpi = 300,
-  comment = "#>"
-)
-```
-
-I prepared this analysis for a [story](https://www.thejakartapost.com/news/2021/08/12/emergency-curbs-reverse-recovery-in-consumer-confidence-retail-sales.html){target="_blank"} on the impact of COVID-19 emergency curbs on the economy. We will take a look at the consumer confidence index and retail sales index. We will also analyze community mobility data to see how people's visits to retail and recreation places change before, during and after the government tightens movement restrictions.
-
+I prepared this analysis for a
+<a href="https://www.thejakartapost.com/news/2021/08/12/emergency-curbs-reverse-recovery-in-consumer-confidence-retail-sales.html" target="_blank">story</a>
+on the impact of COVID-19 emergency curbs on the economy. We will take a
+look at the consumer confidence index and retail sales index. We will
+also analyze community mobility data to see how people’s visits to
+retail and recreation places change before, during and after the
+government tightens movement restrictions.
 
 ## Packages
 
-```{r Load the packages}
+``` r
 library(tidyverse)
 library(data.table)
 library(readxl)
@@ -35,12 +24,12 @@ library(ggtext)
 library(patchwork)
 ```
 
-
 ## Consumer confidence
 
-We can get the consumer confidence index data from [Bank Indonesia (BI)](https://www.bi.go.id/id/publikasi/laporan/Pages/SK-Juli-2021.aspx){target="_blank"}.
+We can get the consumer confidence index data from
+<a href="https://www.bi.go.id/id/publikasi/laporan/Pages/SK-Juli-2021.aspx" target="_blank">Bank Indonesia (BI)</a>.
 
-```{r Get overall consumer confidence}
+``` r
 # unzip("data/SK.zip", exdir = "data")
 
 cci_overall_raw <- read_excel(
@@ -71,21 +60,40 @@ cci_overall_tidy <- cci_overall_clean %>%
   mutate(cci = round(cci, 2))
 
 glimpse(cci_overall_tidy)
+#> Rows: 115
+#> Columns: 2
+#> $ date <date> 2012-01-01, 2012-02-01, 2012-03-01, 2012-04-01, 2012-05-01, 2012~
+#> $ cci  <dbl> 119.20, 111.70, 107.30, 102.50, 109.00, 114.40, 113.50, 115.70, 1~
 ```
 
-We have read the overall consumer confidence index data, which stretch as far back as 2012. We can now check the July figure to see how the emergency curbs, which the government implemented starting from July 3, affected consumer confidence.
+We have read the overall consumer confidence index data, which stretch
+as far back as 2012. We can now check the July figure to see how the
+emergency curbs, which the government implemented starting from July 3,
+affected consumer confidence.
 
-```{r Check latest consumer confidece}
+``` r
 tail(cci_overall_tidy, 6)
+#> # A tibble: 6 x 2
+#>   date         cci
+#>   <date>     <dbl>
+#> 1 2021-02-01  85.8
+#> 2 2021-03-01  93.4
+#> 3 2021-04-01 101. 
+#> 4 2021-05-01 104. 
+#> 5 2021-06-01 107. 
+#> 6 2021-07-01  80.2
 ```
 
-The consumer confidence index fell to 80.20 in July. This is below the 100-point threshold separating optimistic and pessimistic territory.
+The consumer confidence index fell to 80.20 in July. This is below the
+100-point threshold separating optimistic and pessimistic territory.
 
-BI also provides consumer confidence broken down by income group. Although they usually move together, it's not always clear cut which income group is the least or most optimistic.
+BI also provides consumer confidence broken down by income group.
+Although they usually move together, it’s not always clear cut which
+income group is the least or most optimistic.
 
 So we will also import the consumer confidence by income group data.
 
-```{r Get consumer confidence by income group}
+``` r
 cci_income_raw <- read_excel(
   "data/SK.xlsx",
   sheet = "Tabel 2",
@@ -126,21 +134,40 @@ cci_income_tidy <- cci_income_clean %>%
   mutate(cci = round(cci, 2))
 
 glimpse(cci_income_tidy)
+#> Rows: 575
+#> Columns: 4
+#> $ income_group_id <chr> "1_2", "1_2", "1_2", "1_2", "1_2", "1_2", "1_2", "1_2"~
+#> $ income_group    <chr> "Rp 1-2 million", "Rp 1-2 million", "Rp 1-2 million", ~
+#> $ date            <date> 2012-01-01, 2012-02-01, 2012-03-01, 2012-04-01, 2012-~
+#> $ cci             <dbl> 122.29, 116.25, 112.80, 109.84, 112.70, 120.29, 122.55~
 ```
 
-Now we can check confidence among consumers depending on their income group.
+Now we can check confidence among consumers depending on their income
+group.
 
-```{r Check latest concumer confidence by income group}
+``` r
 cci_income_tidy %>% 
   dplyr::filter(date == last(date)) %>% 
   arrange(cci)
+#> # A tibble: 5 x 4
+#>   income_group_id income_group       date         cci
+#>   <chr>           <chr>              <date>     <dbl>
+#> 1 1_2             Rp 1-2 million     2021-07-01  74.8
+#> 2 2.1_3           Rp 2.1-3 million   2021-07-01  80.6
+#> 3 4.1_5           Rp 4.1-5 million   2021-07-01  80.7
+#> 4 3.1_4           Rp 3.1-4 million   2021-07-01  81.5
+#> 5 above_5         Above Rp 5 million 2021-07-01  83.8
 ```
 
-Confidence across all income groups fell into the pessimistic territory. But consumers with income between Rp 1 million and Rp 2 million posted the lowest confidence at 74.80.
+Confidence across all income groups fell into the pessimistic territory.
+But consumers with income between Rp 1 million and Rp 2 million posted
+the lowest confidence at 74.80.
 
-We will create a line chart to show how the latest restriction affected consumer confidence. But we will first define a function to create a custom ggplot2 theme.
+We will create a line chart to show how the latest restriction affected
+consumer confidence. But we will first define a function to create a
+custom ggplot2 theme.
 
-```{r Define custom ggplot2 theme}
+``` r
 color_primary <- "#757575"
 color_primary_light <- "#E0E0E0"
 color_annotation <- "#9E9E9E"
@@ -188,9 +215,11 @@ theme_dfr <- function(...,
 }
 ```
 
-Since we are not interested in the entire historical trend in the data, we will plot only figures in the past five years and thus, drop observations prior to 2017.
+Since we are not interested in the entire historical trend in the data,
+we will plot only figures in the past five years and thus, drop
+observations prior to 2017.
 
-```{r Plot overall consumer confidence}
+``` r
 cci_overall_filtered <- cci_overall_tidy %>% 
   mutate(year = year(date)) %>% 
   dplyr::filter(year >= 2017) %>% 
@@ -290,14 +319,21 @@ chart_cci <- ggplot(cci_overall_filtered, aes(date, cci)) +
 chart_cci
 ```
 
-The chart helps us see clearly that consumer confidence fell drastically when regional administrations imposed the large-scale social restrictions during the first few months of the pandemic last year and when the government tightened mobility restrictions in July. More importantly, the emergency curbs halted in July the recovery progress for the previous three months.
+<img src="README_files/figure-gfm/Plot overall consumer confidence-1.png" width="70%" style="display: block; margin: auto;" />
 
+The chart helps us see clearly that consumer confidence fell drastically
+when regional administrations imposed the large-scale social
+restrictions during the first few months of the pandemic last year and
+when the government tightened mobility restrictions in July. More
+importantly, the emergency curbs halted in July the recovery progress
+for the previous three months.
 
 ## Retail sales
 
-We can also download the retail sales index data from [BI](https://www.bi.go.id/id/publikasi/laporan/Pages/SPE_Juni_2021.aspx){target="_blank"}.
+We can also download the retail sales index data from
+<a href="https://www.bi.go.id/id/publikasi/laporan/Pages/SPE_Juni_2021.aspx" target="_blank">BI</a>.
 
-```{r Get retail sales}
+``` r
 # unzip("data/spe.zip", exdir = "data")
 
 rsi_complete_raw <- read_excel(
@@ -347,11 +383,17 @@ rsi_complete_tidy <- rsi_complete_clean %>%
   )
 
 glimpse(rsi_complete_tidy)
+#> Rows: 1,035
+#> Columns: 3
+#> $ category <chr> "Vehicle spare parts and accessories", "Vehicle spare parts a~
+#> $ date     <date> 2012-01-01, 2012-02-01, 2012-03-01, 2012-04-01, 2012-05-01, ~
+#> $ rsi      <dbl> 95.46, 86.88, 93.03, 86.91, 93.11, 98.54, 104.06, 95.66, 97.1~
 ```
 
-Having imported the data, we can now calculate the annual percentage change in the retail sales index.
+Having imported the data, we can now calculate the annual percentage
+change in the retail sales index.
 
-```{r Calculate annual percentage change in retail sales}
+``` r
 rsi_complete_chg <- rsi_complete_tidy %>% 
   mutate(month = month(date)) %>% 
   group_by(category, month) %>% 
@@ -363,21 +405,46 @@ rsi_complete_chg <- rsi_complete_tidy %>%
   select(-c(month, diff_yoy))
 
 glimpse(rsi_complete_chg)
+#> Rows: 1,035
+#> Columns: 4
+#> $ category    <chr> "Vehicle spare parts and accessories", "Vehicle spare part~
+#> $ date        <date> 2012-01-01, 2012-02-01, 2012-03-01, 2012-04-01, 2012-05-0~
+#> $ rsi         <dbl> 95.46, 86.88, 93.03, 86.91, 93.11, 98.54, 104.06, 95.66, 9~
+#> $ pct_chg_yoy <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 8.77, 14.8~
 ```
 
-We can now check the latest annual percentage change in retail sales index across categories.
+We can now check the latest annual percentage change in retail sales
+index across categories.
 
-```{r Check latest retail sales}
+``` r
 rsi_complete_chg %>% 
   dplyr::filter(date == last(date)) %>% 
   arrange(desc(pct_chg_yoy))
+#> # A tibble: 9 x 4
+#>   category                            date         rsi pct_chg_yoy
+#>   <chr>                               <date>     <dbl>       <dbl>
+#> 1 Vehicle fuels                       2021-07-01  66.7        9.11
+#> 2 Food, beverages and tobacco         2021-07-01 232         -0.67
+#> 3 Total                               2021-07-01 182.        -6.23
+#> 4 Other household supplies            2021-07-01 126.        -7.1 
+#> 5 Vehicle spare parts and accessories 2021-07-01  93.4      -11.5 
+#> 6 Other goods                         2021-07-01  68.4      -12.0 
+#> 7 Clothing                            2021-07-01  51.6      -17.0 
+#> 8 Cultural and recreational goods     2021-07-01  56.5      -22.3 
+#> 9 Information and communication tools 2021-07-01 177.       -33.8
 ```
 
-Aside from vehicle fuels, the retail sales posted sharp declines in July from a year earlier. The overall retail sales index was estimated to fall by 6.23 percent year-on-year (yoy). The steepest fall was recorded in information and communication tools.
+Aside from vehicle fuels, the retail sales posted sharp declines in July
+from a year earlier. The overall retail sales index was estimated to
+fall by 6.23 percent year-on-year (yoy). The steepest fall was recorded
+in information and communication tools.
 
-We can create a line chart to show the latest trend and see how it compares with the one during large-scale social restrictions last year. Like with the consumer confidence chart, we will filter out observations prior to 2017. We will also plot only the overall retail sales index.
+We can create a line chart to show the latest trend and see how it
+compares with the one during large-scale social restrictions last year.
+Like with the consumer confidence chart, we will filter out observations
+prior to 2017. We will also plot only the overall retail sales index.
 
-```{r Plot retail sales}
+``` r
 rsi_total_filtered <- rsi_complete_chg %>% 
   mutate(year = year(date)) %>% 
   dplyr::filter(year >= 2017, category == "Total") %>% 
@@ -428,11 +495,17 @@ chart_rsi <- ggplot(rsi_total_filtered, aes(date, pct_chg_yoy)) +
 chart_rsi
 ```
 
-We can see from the chart that the fall in retail sales was not as steep as it was during the large-scale social restrictions. However, the recent tightening of movement restrictions also reversed the recovery trend.
+<img src="README_files/figure-gfm/Plot retail sales-1.png" width="70%" style="display: block; margin: auto;" />
 
-We can join the consumer confidence and retail sales charts to make a single chart.
+We can see from the chart that the fall in retail sales was not as steep
+as it was during the large-scale social restrictions. However, the
+recent tightening of movement restrictions also reversed the recovery
+trend.
 
-```{r Patchwork consumer confidence and retail sales charts}
+We can join the consumer confidence and retail sales charts to make a
+single chart.
+
+``` r
 chart_cci + chart_rsi +
   plot_annotation(
     title = "Emergency curbs reverse recovery in consumer confidence, retail sales",
@@ -445,12 +518,17 @@ chart_cci + chart_rsi +
   )
 ```
 
+<img src="README_files/figure-gfm/Patchwork consumer confidence and retail sales charts-1.png" width="70%" style="display: block; margin: auto;" />
 
 ## Mobility to retail and recreation places
 
-The charts on consumer confidence and retail sales suggest both metrics tend to go down when the government tightens mobility restrictions. One way to test this assumption is to check it with community mobility data from [Google](https://www.google.com/covid19/mobility/){target="_blank"}.
+The charts on consumer confidence and retail sales suggest both metrics
+tend to go down when the government tightens mobility restrictions. One
+way to test this assumption is to check it with community mobility data
+from
+<a href="https://www.google.com/covid19/mobility/" target="_blank">Google</a>.
 
-```{r Get community mobility}
+``` r
 path_mobility_data <- "data/mobility_indonesia_raw.csv"
 
 if (!file.exists(path_mobility_data)) {
@@ -479,11 +557,19 @@ if (!file.exists(path_mobility_data)) {
 }
 
 glimpse(mobility_idn_raw)
+#> Rows: 18,935
+#> Columns: 4
+#> $ country_region                                     <chr> "Indonesia", "Indon~
+#> $ sub_region_1                                       <chr> "", "", "", "", "",~
+#> $ date                                               <date> 2020-02-15, 2020-0~
+#> $ retail_and_recreation_percent_change_from_baseline <int> -2, -3, -3, -3, -3,~
 ```
 
-After reading the mobility data, we need to smooth it to seven-day moving averages to separate the movement trend from day-to-day fluctuations.
+After reading the mobility data, we need to smooth it to seven-day
+moving averages to separate the movement trend from day-to-day
+fluctuations.
 
-```{r Explore mobility to retail and recreation places}
+``` r
 # Rename provinces to ensure consistency with other data to enable joins
 mobility_idn_avg <- mobility_idn_raw %>% 
   mutate(
@@ -508,11 +594,19 @@ mobility_idn_avg <- mobility_idn_raw %>%
   ungroup()
 
 glimpse(mobility_idn_avg)
+#> Rows: 18,935
+#> Columns: 5
+#> $ country_region                                     <chr> "Indonesia", "Indon~
+#> $ sub_region_1                                       <chr> "National", "Nation~
+#> $ date                                               <date> 2020-02-15, 2020-0~
+#> $ retail_and_recreation_percent_change_from_baseline <int> -2, -3, -3, -3, -3,~
+#> $ seven_day_average                                  <dbl> NA, NA, NA, NA, NA,~
 ```
 
-We can plot the smoothed mobility at national level to gauge the movement trend nationwide.
+We can plot the smoothed mobility at national level to gauge the
+movement trend nationwide.
 
-```{r Plot mobility to retail and recreation places}
+``` r
 mobility_ntl_avg <- mobility_idn_avg %>% 
   dplyr::filter(sub_region_1 == "National")
 
@@ -529,19 +623,38 @@ ggplot(mobility_ntl_avg, aes(date, seven_day_average)) +
   ) +
   labs(x = NULL, y = NULL) +
   theme_dfr()
+#> Warning: Removed 6 row(s) containing missing values (geom_path).
 ```
 
-The mobility data suggest that people reduced their visits to retail and recreation places even before the government started tightening the restrictions as the pandemic began to worsen. In July, the surge in cases and deaths led to a reverse in mobility from a brief moment of a return to the pre-pandemic level between April and June. But the decline was not as steep as during the large-scale social restrictions last year.
+<img src="README_files/figure-gfm/Plot mobility to retail and recreation places-1.png" width="70%" style="display: block; margin: auto;" />
 
-Now that the government has gradually relaxed the restrictions and cases started declining in some places, more people started going to shopping centers and other recreation places again.
+The mobility data suggest that people reduced their visits to retail and
+recreation places even before the government started tightening the
+restrictions as the pandemic began to worsen. In July, the surge in
+cases and deaths led to a reverse in mobility from a brief moment of a
+return to the pre-pandemic level between April and June. But the decline
+was not as steep as during the large-scale social restrictions last
+year.
 
-But the trend is somewhat different from one province to another as cases and deaths remained high in some places. We can see this trend if we compare mobility by region. 
+Now that the government has gradually relaxed the restrictions and cases
+started declining in some places, more people started going to shopping
+centers and other recreation places again.
 
-To simplify the analysis, we will group provinces into Java and Bali, and other. We will then take the average mobility for each region. For better comparison, we need to weight the average mobility by population.
+But the trend is somewhat different from one province to another as
+cases and deaths remained high in some places. We can see this trend if
+we compare mobility by region.
 
-We can get population data from [Statistics Indonesia (BPS)](https://bps.go.id/indicator/12/1886/1/jumlah-penduduk-hasil-proyeksi-menurut-provinsi-dan-jenis-kelamin.html){target="_blank"}. The agency provides population estimates for the country broken down by sex and province from the 2015 Intercensal Survey (SUPAS). We can get this data through the agency's application programming interface (API).
+To simplify the analysis, we will group provinces into Java and Bali,
+and other. We will then take the average mobility for each region. For
+better comparison, we need to weight the average mobility by population.
 
-```{r Get population data}
+We can get population data from
+<a href="https://bps.go.id/indicator/12/1886/1/jumlah-penduduk-hasil-proyeksi-menurut-provinsi-dan-jenis-kelamin.html" target="_blank">Statistics Indonesia (BPS)</a>.
+The agency provides population estimates for the country broken down by
+sex and province from the 2015 Intercensal Survey (SUPAS). We can get
+this data through the agency’s application programming interface (API).
+
+``` r
 api_key_bps <- Sys.getenv("api_key_bps")
 
 # Store var id for querying population data and separating `id` column later
@@ -685,11 +798,22 @@ population_tidy <- population_raw %>%
   )
 
 glimpse(population_tidy)
+#> Rows: 630
+#> Columns: 7
+#> $ province_id    <chr> "9999", "9999", "9999", "9999", "9999", "9999", "9999",~
+#> $ province       <chr> "Indonesia", "Indonesia", "Indonesia", "Indonesia", "In~
+#> $ island_group_1 <chr> "Indonesia", "Indonesia", "Indonesia", "Indonesia", "In~
+#> $ island_group_2 <chr> "Indonesia", "Indonesia", "Indonesia", "Indonesia", "In~
+#> $ sex            <chr> "Men", "Men", "Men", "Men", "Men", "Men", "Women", "Wom~
+#> $ year           <chr> "2015", "2016", "2017", "2018", "2019", "2020", "2015",~
+#> $ population     <dbl> 128483.4, 129910.2, 131310.6, 132683.0, 134025.6, 13533~
 ```
 
-We will use the estimates for overall population in 2020. After filtering the data, we can then calculate each region's share of population.
+We will use the estimates for overall population in 2020. After
+filtering the data, we can then calculate each region’s share of
+population.
 
-```{r Calculate population by island group}
+``` r
 population_island_2020 <- population_tidy %>% 
   dplyr::filter(
     island_group_2 != "Indonesia",
@@ -706,11 +830,17 @@ population_island_2020 <- population_tidy %>%
   select(-total)
 
 glimpse(population_island_2020)
+#> Rows: 2
+#> Columns: 3
+#> $ island_group_2   <chr> "Java & Bali", "Other"
+#> $ population       <dbl> 166803.9, 102799.5
+#> $ population_share <dbl> 0.618701, 0.381299
 ```
 
-Now, we can start computing the average mobility for each region and use the population data to calculate the weighted average.
+Now, we can start computing the average mobility for each region and use
+the population data to calculate the weighted average.
 
-```{r Calculate average mobility by island group}
+``` r
 mobility_province <- mobility_idn_avg %>% 
   dplyr::filter(sub_region_1 != "National")
 
@@ -752,11 +882,21 @@ mobility_island_weighted <- mobility_population %>%
   ungroup()
 
 glimpse(mobility_island_weighted)
+#> Rows: 1,082
+#> Columns: 7
+#> $ island_group_2             <chr> "Java & Bali", "Java & Bali", "Java & Bali"~
+#> $ date                       <date> 2020-02-15, 2020-02-16, 2020-02-17, 2020-0~
+#> $ retail_recreation_mobility <dbl> 0.0000000, -2.8888889, -3.5555556, -4.00000~
+#> $ population                 <dbl> 166803.9, 166803.9, 166803.9, 166803.9, 166~
+#> $ population_share           <dbl> 0.618701, 0.618701, 0.618701, 0.618701, 0.6~
+#> $ retail_recreation_mob_w    <dbl> 0.00000000, -1.78735852, -2.19982587, -2.47~
+#> $ seven_day_average          <dbl> NA, NA, NA, NA, NA, NA, -1.9444889, -1.8953~
 ```
 
-We can now plot the weighted average of the number of visitors to retail and recreation places by region.
+We can now plot the weighted average of the number of visitors to retail
+and recreation places by region.
 
-```{r Plot weighted mobility by island group}
+``` r
 chart_mobility_weighted <- ggplot(
   mobility_island_weighted, 
   aes(date, seven_day_average, color = island_group_2)
@@ -861,18 +1001,31 @@ chart_mobility_weighted <- ggplot(
   theme_dfr()
 
 chart_mobility_weighted
+#> Warning: Removed 12 row(s) containing missing values (geom_path).
 ```
 
-The chart shows that visits to retail and recreation places in Java and Bali fell more drastically than in other regions. This is expected given the difference in stringency of containment measures between the two regions. But we can see a similar trend, namely people reduced their visits even before the government tightened mobility restrictions.
+<img src="README_files/figure-gfm/Plot weighted mobility by island group-1.png" width="70%" style="display: block; margin: auto;" />
 
-[This column](https://voxeu.org/article/covid-social-distancing-driven-mostly-voluntary-demobilisation){target="_blank"} also finds that mobility falls regardless of restrictions in advanced economies such as the United States, Italy and the United Kingdom.
+The chart shows that visits to retail and recreation places in Java and
+Bali fell more drastically than in other regions. This is expected given
+the difference in stringency of containment measures between the two
+regions. But we can see a similar trend, namely people reduced their
+visits even before the government tightened mobility restrictions.
 
+<a href="https://voxeu.org/article/covid-social-distancing-driven-mostly-voluntary-demobilisation" target="_blank">This column</a>
+also finds that mobility falls regardless of restrictions in advanced
+economies such as the United States, Italy and the United Kingdom.
 
 ## Mobility and COVID-19 cases
 
-The relationship between mobility and infections seem to go both ways. But since the data show that people tend to reduce their visits outside when the pandemic worsens, we can analyze how mobility varies with confirmed COVID-19 cases among provinces. We can obtain Indonesia's pandemic data from the government's API. We will take a look at cumulative confirmed cases.
+The relationship between mobility and infections seem to go both ways.
+But since the data show that people tend to reduce their visits outside
+when the pandemic worsens, we can analyze how mobility varies with
+confirmed COVID-19 cases among provinces. We can obtain Indonesia’s
+pandemic data from the government’s API. We will take a look at
+cumulative confirmed cases.
 
-```{r Get COVID cases}
+``` r
 path_covid_data <- "data/covid_province_raw.csv"
 
 if (!file.exists(path_covid_data)) {
@@ -910,11 +1063,16 @@ covid_tidy <- covid_raw %>%
   dplyr::filter(key != "PROVINSI JAWA TENGAH") # This observation seems like a bug
 
 glimpse(covid_tidy)
+#> Rows: 34
+#> Columns: 2
+#> $ key          <chr> "Jakarta", "West Java", "Central Java", "East Java", "Eas~
+#> $ jumlah_kasus <dbl> 833654, 643567, 423915, 342852, 133825, 131901, 121861, 1~
 ```
 
-Again, to better compare cases between one province and another, we first need to adjust for population.
+Again, to better compare cases between one province and another, we
+first need to adjust for population.
 
-```{r Caculate cases and deaths by population}
+``` r
 population_province_2020 <- population_tidy %>% 
   dplyr::filter(
     province != "Indonesia",
@@ -930,11 +1088,22 @@ covid_adjusted <- covid_population %>%
   mutate(cases_per_hundred_people = jumlah_kasus / population * 100)
 
 glimpse(covid_adjusted)
+#> Rows: 34
+#> Columns: 6
+#> $ key                      <chr> "Jakarta", "West Java", "Central Java", "East~
+#> $ jumlah_kasus             <dbl> 833654, 643567, 423915, 342852, 133825, 13190~
+#> $ island_group_1           <chr> "Java", "Java", "Java", "Java", "Kalimantan",~
+#> $ island_group_2           <chr> "Java & Bali", "Java & Bali", "Java & Bali", ~
+#> $ population               <dbl> 10576.4, 49565.2, 34738.2, 39955.9, 3664.7, 3~
+#> $ cases_per_hundred_people <dbl> 7882.2094, 1298.4251, 1220.3137, 858.0760, 36~
 ```
 
-We can fit a linear model to see how far can COVID-19 cases explain the variation in the number of visitors to places like restaurants and shopping centers. We will use the smoothed mobility and the natural log of cumulative coronavirus cases per 100 people. 
+We can fit a linear model to see how far can COVID-19 cases explain the
+variation in the number of visitors to places like restaurants and
+shopping centers. We will use the smoothed mobility and the natural log
+of cumulative coronavirus cases per 100 people.
 
-```{r Fit linear model to mobility and COVID cases}
+``` r
 mobility_latest <- mobility_province %>% 
   dplyr::filter(date == last(date))
 
@@ -947,13 +1116,36 @@ mobility_covid_lm <- lm(
 )
 
 summary(mobility_covid_lm)
+#> 
+#> Call:
+#> lm(formula = seven_day_average ~ log(cases_per_hundred_people), 
+#>     data = mobility_covid)
+#> 
+#> Residuals:
+#>      Min       1Q   Median       3Q      Max 
+#> -29.0144  -5.8993   0.8927   4.4132  23.5420 
+#> 
+#> Coefficients:
+#>                               Estimate Std. Error t value Pr(>|t|)    
+#> (Intercept)                     58.663     18.489   3.173  0.00332 ** 
+#> log(cases_per_hundred_people)   -9.478      2.612  -3.629  0.00098 ***
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> 
+#> Residual standard error: 10.17 on 32 degrees of freedom
+#> Multiple R-squared:  0.2916, Adjusted R-squared:  0.2694 
+#> F-statistic: 13.17 on 1 and 32 DF,  p-value: 0.0009799
 ```
 
-We get a statistically significant result, but the *R^2^* is not satisfying. Still, this is enough to make us slightly more confident in the assumption that mobility varies with coronavirus cases.
+We get a statistically significant result, but the *R<sup>2</sup>* is
+not satisfying. Still, this is enough to make us slightly more confident
+in the assumption that mobility varies with coronavirus cases.
 
-Now, we can make another chart to plot smoothed mobility against coronavirus cases per 100 people. To account for density, we will map the COVID-19 cases to an x-axis in log scale.
+Now, we can make another chart to plot smoothed mobility against
+coronavirus cases per 100 people. To account for density, we will map
+the COVID-19 cases to an x-axis in log scale.
 
-```{r Plot COVID cases and mobility}
+``` r
 annotation_text_province <- mobility_covid %>% 
   dplyr::filter(sub_region_1 %in% c("Bali", "Jakarta", "Gorontalo", "Aceh"))
 
@@ -1009,11 +1201,17 @@ chart_covid_mobitliy <- ggplot(
 chart_covid_mobitliy
 ```
 
-The scatter plot shows that mobility tends to be closer to pre-pandemic levels in provinces with fewer cases, after adjusting for population. The linear model, which we fit using `geom_smooth()`, is good enough to show the relationship between the two variables.
+<img src="README_files/figure-gfm/Plot COVID cases and mobility-1.png" width="70%" style="display: block; margin: auto;" />
 
-We can join the scatter plot with the mobility by region chart we have made earlier to make one final chart.
+The scatter plot shows that mobility tends to be closer to pre-pandemic
+levels in provinces with fewer cases, after adjusting for population.
+The linear model, which we fit using `geom_smooth()`, is good enough to
+show the relationship between the two variables.
 
-```{r Patchwork mobility charts}
+We can join the scatter plot with the mobility by region chart we have
+made earlier to make one final chart.
+
+``` r
 chart_mobility_weighted + chart_covid_mobitliy +
   plot_annotation(
     title = "Mobility falls before govt tightens restrictions as cases rise",
@@ -1029,4 +1227,7 @@ chart_mobility_weighted + chart_covid_mobitliy +
     ),
     theme = theme_dfr()
   )
+#> Warning: Removed 12 row(s) containing missing values (geom_path).
 ```
+
+<img src="README_files/figure-gfm/Patchwork mobility charts-1.png" width="70%" style="display: block; margin: auto;" />
