@@ -1,0 +1,559 @@
+entity,Code,date,metrics,index
+China,CHN,1990,gdp_index,100
+China,CHN,1990,emission_index,100
+China,CHN,1990,emission_adj_index,100
+China,CHN,1991,gdp_index,107.78209199050764
+China,CHN,1991,emission_index,103.43569148935288
+China,CHN,1991,emission_adj_index,101.99399807892068
+China,CHN,1992,gdp_index,121.61399374612604
+China,CHN,1992,emission_index,106.89122178601662
+China,CHN,1992,emission_adj_index,108.05864919780093
+China,CHN,1993,gdp_index,136.91546235781064
+China,CHN,1993,emission_index,113.11313188695284
+China,CHN,1993,emission_adj_index,114.32526329838093
+China,CHN,1994,gdp_index,153.02546845936183
+China,CHN,1994,emission_index,118.97780193596128
+China,CHN,1994,emission_adj_index,112.87859829804228
+China,CHN,1995,gdp_index,167.95303387809318
+China,CHN,1995,emission_index,127.91553062751308
+China,CHN,1995,emission_adj_index,121.96283041071989
+China,CHN,1996,gdp_index,182.69331401105353
+China,CHN,1996,emission_index,132.38608850155268
+China,CHN,1996,emission_adj_index,126.2467106012386
+China,CHN,1997,gdp_index,197.53622788125526
+China,CHN,1997,emission_index,131.5382412116891
+China,CHN,1997,emission_adj_index,122.48802819108026
+China,CHN,1998,gdp_index,211.00042471230697
+China,CHN,1998,emission_index,124.82423594039167
+China,CHN,1998,emission_adj_index,117.53184021544887
+China,CHN,1999,gdp_index,225.20810804954573
+China,CHN,1999,emission_index,123.60101294546372
+China,CHN,1999,emission_adj_index,118.21992822443714
+China,CHN,2000,gdp_index,242.4108493572564
+China,CHN,2000,emission_index,126.16963687532264
+China,CHN,2000,emission_adj_index,119.50180954396703
+China,CHN,2001,gdp_index,260.7168799749509
+China,CHN,2001,emission_index,128.21227727619677
+China,CHN,2001,emission_adj_index,124.50885974193704
+China,CHN,2002,gdp_index,282.6298208117902
+China,CHN,2002,emission_index,140.65528151198976
+China,CHN,2002,emission_adj_index,133.20052748811926
+China,CHN,2003,gdp_index,309.06920927781005
+China,CHN,2003,emission_index,164.56441815463057
+China,CHN,2003,emission_adj_index,148.48102535021056
+China,CHN,2004,gdp_index,338.3119741551467
+China,CHN,2004,emission_index,188.34692156774148
+China,CHN,2004,emission_adj_index,166.89050888170223
+China,CHN,2005,gdp_index,374.65133239669024
+China,CHN,2005,emission_index,210.8314537758393
+China,CHN,2005,emission_adj_index,182.51594616088818
+China,CHN,2006,gdp_index,419.95905956318734
+China,CHN,2006,emission_index,231.6621887149265
+China,CHN,2006,emission_adj_index,192.91213252152238
+China,CHN,2007,gdp_index,477.2239231014028
+China,CHN,2007,emission_index,247.83831496595096
+China,CHN,2007,emission_adj_index,208.3675362351873
+China,CHN,2008,gdp_index,520.60491442286
+China,CHN,2008,emission_index,264.89236131006584
+China,CHN,2008,emission_adj_index,226.15404904428988
+China,CHN,2009,gdp_index,566.7094132405188
+China,CHN,2009,emission_index,277.114845754085
+China,CHN,2009,emission_adj_index,252.9975115140947
+China,CHN,2010,gdp_index,623.9631167173728
+China,CHN,2010,emission_index,301.91159884459336
+China,CHN,2010,emission_adj_index,273.55007825671134
+China,CHN,2011,gdp_index,680.2893556108833
+China,CHN,2011,emission_index,331.5761861137847
+China,CHN,2011,emission_adj_index,300.3993491328314
+China,CHN,2012,gdp_index,730.2189819348704
+China,CHN,2012,emission_index,338.3592272492226
+China,CHN,2012,emission_adj_index,310.01321293771025
+China,CHN,2013,gdp_index,783.0533153034028
+China,CHN,2013,emission_index,342.17323515933214
+China,CHN,2013,emission_adj_index,316.2513350020633
+China,CHN,2014,gdp_index,836.9526695893136
+China,CHN,2014,emission_index,341.15005020610016
+China,CHN,2014,emission_adj_index,316.30659105245275
+China,CHN,2015,gdp_index,891.3444838416053
+China,CHN,2015,emission_index,334.6173000051813
+China,CHN,2015,emission_adj_index,314.383306185967
+China,CHN,2016,gdp_index,947.2474946300373
+China,CHN,2016,emission_index,328.42027954353233
+China,CHN,2016,emission_adj_index,314.55551831327244
+China,CHN,2017,gdp_index,1007.4062806977702
+China,CHN,2017,emission_index,333.58982768108535
+China,CHN,2017,emission_adj_index,319.19702332264666
+China,CHN,2018,gdp_index,1070.5123220512535
+China,CHN,2018,emission_index,339.0511173341132
+China,CHN,2018,emission_adj_index,326.28672503743377
+China,CHN,2019,gdp_index,1130.1595646834824
+China,CHN,2019,emission_index,344.99570747830154
+China,CHN,2019,emission_adj_index,NA
+China,CHN,2020,gdp_index,1152.5275572833957
+China,CHN,2020,emission_index,341.3295365535379
+China,CHN,2020,emission_adj_index,NA
+India,IND,1990,gdp_index,100
+India,IND,1990,emission_index,100
+India,IND,1990,emission_adj_index,100
+India,IND,1991,gdp_index,99.01642630973491
+India,IND,1991,emission_index,104.31660360885391
+India,IND,1991,emission_adj_index,101.6770485874508
+India,IND,1992,gdp_index,102.3734972414168
+India,IND,1992,emission_index,108.90541048003386
+India,IND,1992,emission_adj_index,107.61447139227802
+India,IND,1993,gdp_index,105.14446863397092
+India,IND,1993,emission_index,110.34271274195588
+India,IND,1993,emission_adj_index,106.59535804657155
+India,IND,1994,gdp_index,109.98772719906546
+India,IND,1994,emission_index,114.44498720253034
+India,IND,1994,emission_adj_index,109.88968762904668
+India,IND,1995,gdp_index,116.06991801184088
+India,IND,1995,emission_index,119.34767628374946
+India,IND,1995,emission_adj_index,113.09804279558473
+India,IND,1996,gdp_index,122.48906771129289
+India,IND,1996,emission_index,126.90989013013483
+India,IND,1996,emission_adj_index,118.42661770571846
+India,IND,1997,gdp_index,125.08952836782335
+India,IND,1997,emission_index,129.6524915004615
+India,IND,1997,emission_adj_index,121.53024711310043
+India,IND,1998,gdp_index,130.40438661468718
+India,IND,1998,emission_index,129.95498477468146
+India,IND,1998,emission_adj_index,121.5983728921938
+India,IND,1999,gdp_index,139.39983277298035
+India,IND,1999,emission_index,138.34838917348534
+India,IND,1999,emission_adj_index,131.3017559665424
+India,IND,2000,gdp_index,142.21722689454194
+India,IND,2000,emission_index,139.74506038447876
+India,IND,2000,emission_adj_index,127.76027266967347
+India,IND,2001,gdp_index,146.52267803432687
+India,IND,2001,emission_index,139.32966226799718
+India,IND,2001,emission_adj_index,128.93639312715393
+India,IND,2002,gdp_index,149.54818979265949
+India,IND,2002,emission_index,141.1803377790254
+India,IND,2002,emission_adj_index,129.31098579816876
+India,IND,2003,gdp_index,158.66121546104995
+India,IND,2003,emission_index,143.8324424570811
+India,IND,2003,emission_adj_index,133.98627257448413
+India,IND,2004,gdp_index,168.48814011534571
+India,IND,2004,emission_index,150.32442501145883
+India,IND,2004,emission_adj_index,140.1863164312893
+India,IND,2005,gdp_index,178.98823631605322
+India,IND,2005,emission_index,155.9234796854192
+India,IND,2005,emission_adj_index,143.58060362059962
+India,IND,2006,gdp_index,190.44936183804455
+India,IND,2006,emission_index,163.0826162006014
+India,IND,2006,emission_adj_index,152.04765875546988
+India,IND,2007,gdp_index,201.96807090903155
+India,IND,2007,emission_index,173.1889283173468
+India,IND,2007,emission_adj_index,162.27406981818478
+India,IND,2008,gdp_index,205.17451257797936
+India,IND,2008,emission_index,183.82433323900048
+India,IND,2008,emission_adj_index,170.64736083189135
+India,IND,2009,gdp_index,218.2053269813209
+India,IND,2009,emission_index,199.831021512663
+India,IND,2009,emission_adj_index,179.93269316456065
+India,IND,2010,gdp_index,233.57210474165643
+India,IND,2010,emission_index,205.21570523716179
+India,IND,2010,emission_adj_index,182.82433367830416
+India,IND,2011,gdp_index,242.66732318096524
+India,IND,2011,emission_index,213.15985995632118
+India,IND,2011,emission_adj_index,187.85398945535852
+India,IND,2012,gdp_index,252.77605046923912
+India,IND,2012,emission_index,231.44407251419193
+India,IND,2012,emission_adj_index,202.99264494098642
+India,IND,2013,gdp_index,265.7562889951392
+India,IND,2013,emission_index,239.5734494790097
+India,IND,2013,emission_adj_index,202.43019834701946
+India,IND,2014,gdp_index,282.1977788802092
+India,IND,2014,emission_index,254.43454526721248
+India,IND,2014,emission_adj_index,217.60169531304737
+India,IND,2015,gdp_index,301.37808199526876
+India,IND,2015,emission_index,259.5559384356052
+India,IND,2015,emission_adj_index,224.70770420259902
+India,IND,2016,gdp_index,322.72236364775563
+India,IND,2016,emission_index,272.5698055748845
+India,IND,2016,emission_adj_index,234.40855146807814
+India,IND,2017,gdp_index,341.0071064903105
+India,IND,2017,emission_index,276.9562826515901
+India,IND,2017,emission_adj_index,239.61369997207748
+India,IND,2018,gdp_index,359.53428669937296
+India,IND,2018,emission_index,289.0996629581241
+India,IND,2018,emission_adj_index,247.91106254259358
+India,IND,2019,gdp_index,370.29394132373625
+India,IND,2019,emission_index,288.95981446214785
+India,IND,2019,emission_adj_index,NA
+India,IND,2020,gdp_index,337.446161055182
+India,IND,2020,emission_index,259.24815968953163
+India,IND,2020,emission_adj_index,NA
+Indonesia,IDN,1990,gdp_index,100
+Indonesia,IDN,1990,emission_index,100
+Indonesia,IDN,1990,emission_adj_index,100
+Indonesia,IDN,1991,gdp_index,105.07105895975857
+Indonesia,IDN,1991,emission_index,118.11582512911355
+Indonesia,IDN,1991,emission_adj_index,113.1053165251237
+Indonesia,IDN,1992,gdp_index,110.02182974439434
+Indonesia,IDN,1992,emission_index,130.89494201920425
+Indonesia,IDN,1992,emission_adj_index,126.88813760676652
+Indonesia,IDN,1993,gdp_index,115.25911577220064
+Indonesia,IDN,1993,emission_index,138.99813339054822
+Indonesia,IDN,1993,emission_adj_index,131.4666166700754
+Indonesia,IDN,1994,gdp_index,121.9896957012429
+Indonesia,IDN,1994,emission_index,138.72513058935328
+Indonesia,IDN,1994,emission_adj_index,132.29376240156404
+Indonesia,IDN,1995,gdp_index,129.99491006797837
+Indonesia,IDN,1995,emission_index,138.8622688660375
+Indonesia,IDN,1995,emission_adj_index,133.68236141490308
+Indonesia,IDN,1996,gdp_index,138.077899989875
+Indonesia,IDN,1996,emission_index,154.02548660284438
+Indonesia,IDN,1996,emission_adj_index,146.52625275913175
+Indonesia,IDN,1997,gdp_index,142.48240740119374
+Indonesia,IDN,1997,emission_index,167.08025374794636
+Indonesia,IDN,1997,emission_adj_index,154.95503862950432
+Indonesia,IDN,1998,gdp_index,122.03538971506521
+Indonesia,IDN,1998,emission_index,126.72329573437902
+Indonesia,IDN,1998,emission_adj_index,86.29591394002925
+Indonesia,IDN,1999,gdp_index,121.29654253305621
+Indonesia,IDN,1999,emission_index,141.15906131639926
+Indonesia,IDN,1999,emission_adj_index,128.13743569138188
+Indonesia,IDN,2000,gdp_index,125.52034360237849
+Indonesia,IDN,2000,emission_index,151.6950914547663
+Indonesia,IDN,2000,emission_adj_index,138.20649561147084
+Indonesia,IDN,2001,gdp_index,128.32594883906322
+Indonesia,IDN,2001,emission_index,167.49499588134555
+Indonesia,IDN,2001,emission_adj_index,150.05490455932738
+Indonesia,IDN,2002,gdp_index,132.2920367183044
+Indonesia,IDN,2002,emission_index,170.69625015158098
+Indonesia,IDN,2002,emission_adj_index,163.57627416027668
+Indonesia,IDN,2003,gdp_index,136.7589207655345
+Indonesia,IDN,2003,emission_index,173.50172806234633
+Indonesia,IDN,2003,emission_adj_index,168.6821559793379
+Indonesia,IDN,2004,gdp_index,141.72451244191805
+Indonesia,IDN,2004,emission_index,183.72713915119382
+Indonesia,IDN,2004,emission_adj_index,175.87292739016976
+Indonesia,IDN,2005,gdp_index,147.80391505822502
+Indonesia,IDN,2005,emission_index,183.14989668399602
+Indonesia,IDN,2005,emission_adj_index,176.7021076892411
+Indonesia,IDN,2006,gdp_index,153.8749820860985
+Indonesia,IDN,2006,emission_index,182.36613157382416
+Indonesia,IDN,2006,emission_adj_index,181.15864040334228
+Indonesia,IDN,2007,gdp_index,161.48635904777984
+Indonesia,IDN,2007,emission_index,195.77116318413545
+Indonesia,IDN,2007,emission_adj_index,196.3697376639989
+Indonesia,IDN,2008,gdp_index,168.94708321699596
+Indonesia,IDN,2008,emission_index,214.05988665107313
+Indonesia,IDN,2008,emission_adj_index,219.62020562181328
+Indonesia,IDN,2009,gdp_index,174.4333495583784
+Indonesia,IDN,2009,emission_index,226.1752292173892
+Indonesia,IDN,2009,emission_adj_index,233.6969782865513
+Indonesia,IDN,2010,gdp_index,182.82755866003063
+Indonesia,IDN,2010,emission_index,213.72403868968632
+Indonesia,IDN,2010,emission_adj_index,226.59430159105497
+Indonesia,IDN,2011,gdp_index,191.50879351059712
+Indonesia,IDN,2011,emission_index,250.21012130671534
+Indonesia,IDN,2011,emission_adj_index,261.61998577825756
+Indonesia,IDN,2012,gdp_index,200.33061835745772
+Indonesia,IDN,2012,emission_index,255.74644275915745
+Indonesia,IDN,2012,emission_adj_index,276.4758170160417
+Indonesia,IDN,2013,gdp_index,208.64720019854647
+Indonesia,IDN,2013,emission_index,197.11943782682255
+Indonesia,IDN,2013,emission_adj_index,224.88956395357715
+Indonesia,IDN,2014,gdp_index,216.2400226715628
+Indonesia,IDN,2014,emission_index,197.21679078270245
+Indonesia,IDN,2014,emission_adj_index,224.96783101585427
+Indonesia,IDN,2015,gdp_index,223.92749061769877
+Indonesia,IDN,2015,emission_index,236.86695938357522
+Indonesia,IDN,2015,emission_adj_index,260.20610089954357
+Indonesia,IDN,2016,gdp_index,232.34456073198024
+Indonesia,IDN,2016,emission_index,262.2297751723843
+Indonesia,IDN,2016,emission_adj_index,282.8332348049737
+Indonesia,IDN,2017,gdp_index,241.2693736428618
+Indonesia,IDN,2017,emission_index,242.20378217820956
+Indonesia,IDN,2017,emission_adj_index,263.60417078641524
+Indonesia,IDN,2018,gdp_index,250.89077370670623
+Indonesia,IDN,2018,emission_index,260.02296223172954
+Indonesia,IDN,2018,emission_adj_index,279.39219825455694
+Indonesia,IDN,2019,gdp_index,260.6038698669716
+Indonesia,IDN,2019,emission_index,275.43968948471445
+Indonesia,IDN,2019,emission_adj_index,NA
+Indonesia,IDN,2020,gdp_index,252.50653707666046
+Indonesia,IDN,2020,emission_index,247.8670793721549
+Indonesia,IDN,2020,emission_adj_index,NA
+Singapore,SGP,1990,gdp_index,100
+Singapore,SGP,1990,emission_index,100
+Singapore,SGP,1990,emission_adj_index,100
+Singapore,SGP,1991,gdp_index,103.69548431100095
+Singapore,SGP,1991,emission_index,98.82693604191776
+Singapore,SGP,1991,emission_adj_index,101.23401470286235
+Singapore,SGP,1992,gdp_index,107.30782611069696
+Singapore,SGP,1992,emission_index,102.49416932961553
+Singapore,SGP,1992,emission_adj_index,111.02431874091548
+Singapore,SGP,1993,gdp_index,116.62037560621525
+Singapore,SGP,1993,emission_index,104.67823695234692
+Singapore,SGP,1993,emission_adj_index,108.72479325976654
+Singapore,SGP,1994,gdp_index,125.56172583693672
+Singapore,SGP,1994,emission_index,122.16483422960647
+Singapore,SGP,1994,emission_adj_index,113.8053193907569
+Singapore,SGP,1995,gdp_index,130.5757959656138
+Singapore,SGP,1995,emission_index,80.72646515666786
+Singapore,SGP,1995,emission_adj_index,108.41521229760546
+Singapore,SGP,1996,gdp_index,134.74243608098482
+Singapore,SGP,1996,emission_index,92.27960575068627
+Singapore,SGP,1996,emission_adj_index,118.57599934963461
+Singapore,SGP,1997,gdp_index,141.13395937544698
+Singapore,SGP,1997,emission_index,105.29072673378582
+Singapore,SGP,1997,emission_adj_index,126.51438403340707
+Singapore,SGP,1998,gdp_index,133.42493492619624
+Singapore,SGP,1998,emission_index,85.20052435856094
+Singapore,SGP,1998,emission_adj_index,104.35467530137146
+Singapore,SGP,1999,gdp_index,139.9393855490556
+Singapore,SGP,1999,emission_index,85.77987332404673
+Singapore,SGP,1999,emission_adj_index,108.06286931580802
+Singapore,SGP,2000,gdp_index,149.96856754496147
+Singapore,SGP,2000,emission_index,82.49190341057748
+Singapore,SGP,2000,emission_adj_index,124.99564313580049
+Singapore,SGP,2001,gdp_index,144.41692877782526
+Singapore,SGP,2001,emission_index,82.49814770509911
+Singapore,SGP,2001,emission_adj_index,104.12768615964218
+Singapore,SGP,2002,gdp_index,148.70691755483833
+Singapore,SGP,2002,emission_index,78.19363467106389
+Singapore,SGP,2002,emission_adj_index,104.10605143777883
+Singapore,SGP,2003,gdp_index,157.76110842621281
+Singapore,SGP,2003,emission_index,81.54937623477369
+Singapore,SGP,2003,emission_adj_index,110.06512122753205
+Singapore,SGP,2004,gdp_index,171.09714726901393
+Singapore,SGP,2004,emission_index,76.31599768963687
+Singapore,SGP,2004,emission_adj_index,114.02363835293421
+Singapore,SGP,2005,gdp_index,179.42097878866772
+Singapore,SGP,2005,emission_index,58.15360297440178
+Singapore,SGP,2005,emission_adj_index,134.63003101404007
+Singapore,SGP,2006,gdp_index,189.55247045828312
+Singapore,SGP,2006,emission_index,66.52078625713048
+Singapore,SGP,2006,emission_adj_index,157.80436344386592
+Singapore,SGP,2007,gdp_index,198.2217943640929
+Singapore,SGP,2007,emission_index,70.59587424365532
+Singapore,SGP,2007,emission_adj_index,99.65046120174841
+Singapore,SGP,2008,gdp_index,191.46049374640546
+Singapore,SGP,2008,emission_index,82.00460979549794
+Singapore,SGP,2008,emission_adj_index,104.6446663158713
+Singapore,SGP,2009,gdp_index,185.9971005930003
+Singapore,SGP,2009,emission_index,123.39792103509907
+Singapore,SGP,2009,emission_adj_index,93.95234886501925
+Singapore,SGP,2010,gdp_index,209.27334952329977
+Singapore,SGP,2010,emission_index,75.06789954297071
+Singapore,SGP,2010,emission_adj_index,94.14298175296737
+Singapore,SGP,2011,gdp_index,217.94518032402613
+Singapore,SGP,2011,emission_index,39.12125552059174
+Singapore,SGP,2011,emission_adj_index,87.2723427793669
+Singapore,SGP,2012,gdp_index,222.1513932258947
+Singapore,SGP,2012,emission_index,61.00219123648646
+Singapore,SGP,2012,emission_adj_index,95.37364685877372
+Singapore,SGP,2013,gdp_index,229.1565617273807
+Singapore,SGP,2013,emission_index,67.8115556159306
+Singapore,SGP,2013,emission_adj_index,92.99411881833403
+Singapore,SGP,2014,gdp_index,235.10811016911612
+Singapore,SGP,2014,emission_index,67.96545131910439
+Singapore,SGP,2014,emission_adj_index,91.23976037938462
+Singapore,SGP,2015,gdp_index,239.27871129205477
+Singapore,SGP,2015,emission_index,75.58320989734734
+Singapore,SGP,2015,emission_adj_index,85.94357176588787
+Singapore,SGP,2016,gdp_index,244.0572642920178
+Singapore,SGP,2016,emission_index,48.45787772523285
+Singapore,SGP,2016,emission_adj_index,78.91039215369523
+Singapore,SGP,2017,gdp_index,254.86368104681048
+Singapore,SGP,2017,emission_index,46.55841508749123
+Singapore,SGP,2017,emission_adj_index,79.77878425611905
+Singapore,SGP,2018,gdp_index,262.5413919500128
+Singapore,SGP,2018,emission_index,45.235532850556595
+Singapore,SGP,2018,emission_adj_index,80.73339288344755
+Singapore,SGP,2019,gdp_index,263.04586742952023
+Singapore,SGP,2019,emission_index,45.64677563869235
+Singapore,SGP,2019,emission_adj_index,NA
+Singapore,SGP,2020,gdp_index,249.6424425140647
+Singapore,SGP,2020,emission_index,NA
+Singapore,SGP,2020,emission_adj_index,NA
+Turkey,TUR,1990,gdp_index,100
+Turkey,TUR,1990,emission_index,100
+Turkey,TUR,1990,emission_adj_index,100
+Turkey,TUR,1991,gdp_index,99.03274229337995
+Turkey,TUR,1991,emission_index,102.52536907165266
+Turkey,TUR,1991,emission_adj_index,96.62410032057689
+Turkey,TUR,1992,gdp_index,102.32481482519553
+Turkey,TUR,1992,emission_index,104.64775365488444
+Turkey,TUR,1992,emission_adj_index,110.28552023000874
+Turkey,TUR,1993,gdp_index,108.39460330254471
+Turkey,TUR,1993,emission_index,107.42935486020517
+Turkey,TUR,1993,emission_adj_index,101.03017986541025
+Turkey,TUR,1994,gdp_index,101.70030569803058
+Turkey,TUR,1994,emission_index,103.51885810386605
+Turkey,TUR,1994,emission_adj_index,89.71590580076332
+Turkey,TUR,1995,gdp_index,107.98252452343063
+Turkey,TUR,1995,emission_index,110.08370740036358
+Turkey,TUR,1995,emission_adj_index,94.8021841582452
+Turkey,TUR,1996,gdp_index,114.12326749693742
+Turkey,TUR,1996,emission_index,119.49924695071086
+Turkey,TUR,1996,emission_adj_index,88.10474169596564
+Turkey,TUR,1997,gdp_index,120.84070215678528
+Turkey,TUR,1997,emission_index,124.9780072107003
+Turkey,TUR,1997,emission_adj_index,92.31265184441835
+Turkey,TUR,1998,gdp_index,121.81474958385017
+Turkey,TUR,1998,emission_index,123.04798147587638
+Turkey,TUR,1998,emission_adj_index,92.31311966914487
+Turkey,TUR,1999,gdp_index,116.02783480163295
+Turkey,TUR,1999,emission_index,118.73695712179423
+Turkey,TUR,1999,emission_adj_index,91.8532744619843
+Turkey,TUR,2000,gdp_index,122.20299375839892
+Turkey,TUR,2000,emission_index,129.32112830943208
+Turkey,TUR,2000,emission_adj_index,105.51688365839172
+Turkey,TUR,2001,gdp_index,113.46811244910793
+Turkey,TUR,2001,emission_index,118.36349208607089
+Turkey,TUR,2001,emission_adj_index,82.88045978503796
+Turkey,TUR,2002,gdp_index,119.01707840653124
+Turkey,TUR,2002,emission_index,120.72478703502338
+Turkey,TUR,2002,emission_adj_index,90.40549933437991
+Turkey,TUR,2003,gdp_index,124.0782154594417
+Turkey,TUR,2003,emission_index,127.35073942654161
+Turkey,TUR,2003,emission_adj_index,95.13384107364702
+Turkey,TUR,2004,gdp_index,134.35937735028998
+Turkey,TUR,2004,emission_index,129.83688843263596
+Turkey,TUR,2004,emission_adj_index,102.97898254960324
+Turkey,TUR,2005,gdp_index,144.51653968769895
+Turkey,TUR,2005,emission_index,138.47591599823116
+Turkey,TUR,2005,emission_adj_index,111.41395995591215
+Turkey,TUR,2006,gdp_index,152.63930183925154
+Turkey,TUR,2006,emission_index,145.78762632140098
+Turkey,TUR,2006,emission_adj_index,116.44498249669306
+Turkey,TUR,2007,gdp_index,158.436523439293
+Turkey,TUR,2007,emission_index,159.9598683725864
+Turkey,TUR,2007,emission_adj_index,130.52120983317883
+Turkey,TUR,2008,gdp_index,157.82983415830984
+Turkey,TUR,2008,emission_index,156.33236977530578
+Turkey,TUR,2008,emission_adj_index,127.27713275172098
+Turkey,TUR,2009,gdp_index,148.31598958883322
+Turkey,TUR,2009,emission_index,157.36848719362933
+Turkey,TUR,2009,emission_adj_index,117.62198641653579
+Turkey,TUR,2010,gdp_index,158.57887254420012
+Turkey,TUR,2010,emission_index,154.69760455148392
+Turkey,TUR,2010,emission_adj_index,126.13756177160285
+Turkey,TUR,2011,gdp_index,173.65969661427198
+Turkey,TUR,2011,emission_index,164.51130641778784
+Turkey,TUR,2011,emission_adj_index,131.8271785005827
+Turkey,TUR,2012,gdp_index,179.03116785572823
+Turkey,TUR,2012,emission_index,168.6114342912726
+Turkey,TUR,2012,emission_adj_index,132.33331609849978
+Turkey,TUR,2013,gdp_index,190.9633868427316
+Turkey,TUR,2013,emission_index,161.82326853372584
+Turkey,TUR,2013,emission_adj_index,131.11401559843466
+Turkey,TUR,2014,gdp_index,197.01328037777583
+Turkey,TUR,2014,emission_index,166.67394606198303
+Turkey,TUR,2014,emission_adj_index,131.0208012534423
+Turkey,TUR,2015,gdp_index,205.54026687918477
+Turkey,TUR,2015,emission_index,172.82326500745972
+Turkey,TUR,2015,emission_adj_index,132.1847802382356
+Turkey,TUR,2016,gdp_index,208.9161905542405
+Turkey,TUR,2016,emission_index,178.88658562560232
+Turkey,TUR,2016,emission_adj_index,135.12882152817
+Turkey,TUR,2017,gdp_index,221.021347035594
+Turkey,TUR,2017,emission_index,186.61553263106435
+Turkey,TUR,2017,emission_adj_index,137.98640896334632
+Turkey,TUR,2018,gdp_index,224.179553945448
+Turkey,TUR,2018,emission_index,181.1899288752268
+Turkey,TUR,2018,emission_adj_index,131.3860862306074
+Turkey,TUR,2019,gdp_index,223.27981818360848
+Turkey,TUR,2019,emission_index,172.82133239439653
+Turkey,TUR,2019,emission_adj_index,NA
+Turkey,TUR,2020,gdp_index,224.75205917180793
+Turkey,TUR,2020,emission_index,156.36039013382089
+Turkey,TUR,2020,emission_adj_index,NA
+United States,USA,1990,gdp_index,100
+United States,USA,1990,emission_index,100
+United States,USA,1990,emission_adj_index,100
+United States,USA,1991,gdp_index,98.56580547936264
+United States,USA,1991,emission_index,98.09531059304713
+United States,USA,1991,emission_adj_index,97.52209477645705
+United States,USA,1992,gdp_index,100.63235065970801
+United States,USA,1992,emission_index,99.14539078290981
+United States,USA,1992,emission_adj_index,100.05050243756696
+United States,USA,1993,gdp_index,102.04800421284881
+United States,USA,1993,emission_index,100.08281032143668
+United States,USA,1993,emission_adj_index,100.25737837058766
+United States,USA,1994,gdp_index,104.86547567020101
+United States,USA,1994,emission_index,100.80357216697439
+United States,USA,1994,emission_adj_index,101.16492570170091
+United States,USA,1995,gdp_index,106.4057264182487
+United States,USA,1995,emission_index,100.8395248885968
+United States,USA,1995,emission_adj_index,101.18719652347303
+United States,USA,1996,gdp_index,109.14269000972554
+United States,USA,1996,emission_index,103.0923887141849
+United States,USA,1996,emission_adj_index,103.14549041685225
+United States,USA,1997,gdp_index,112.63225789013363
+United States,USA,1997,emission_index,103.19984335337872
+United States,USA,1997,emission_adj_index,103.81040969400854
+United States,USA,1998,gdp_index,116.3159229728243
+United States,USA,1998,emission_index,102.74770458614233
+United States,USA,1998,emission_adj_index,105.52622065537783
+United States,USA,1999,gdp_index,120.4535049431502
+United States,USA,1999,emission_index,102.90216323102952
+United States,USA,1999,emission_adj_index,107.31920311052224
+United States,USA,2000,gdp_index,124.03724801654295
+United States,USA,2000,emission_index,104.67466194383522
+United States,USA,2000,emission_adj_index,110.75455242850364
+United States,USA,2001,gdp_index,124.04177410568444
+United States,USA,2001,emission_index,101.92268774339466
+United States,USA,2001,emission_adj_index,108.12848069542883
+United States,USA,2002,gdp_index,125.03671795583857
+United States,USA,2002,emission_index,101.69749465648283
+United States,USA,2002,emission_adj_index,109.21236588428333
+United States,USA,2003,gdp_index,127.51360260521132
+United States,USA,2003,emission_index,101.64367151920348
+United States,USA,2003,emission_adj_index,109.61082557512938
+United States,USA,2004,gdp_index,131.138407099699
+United States,USA,2004,emission_index,102.70584720430958
+United States,USA,2004,emission_adj_index,111.92912404220866
+United States,USA,2005,gdp_index,134.5001433250473
+United States,USA,2005,emission_index,102.19160736980292
+United States,USA,2005,emission_adj_index,111.56689481502511
+United States,USA,2006,gdp_index,137.01254617118056
+United States,USA,2006,emission_index,99.90787668162207
+United States,USA,2006,emission_adj_index,110.51621351765681
+United States,USA,2007,gdp_index,138.26191643865877
+United States,USA,2007,emission_index,100.22648355296953
+United States,USA,2007,emission_adj_index,109.85112238293308
+United States,USA,2008,gdp_index,136.7732502670936
+United States,USA,2008,emission_index,96.07034536422219
+United States,USA,2008,emission_adj_index,104.08540478954637
+United States,USA,2009,gdp_index,132.1401444118936
+United States,USA,2009,emission_index,88.13121411285498
+United States,USA,2009,emission_adj_index,94.60867299288283
+United States,USA,2010,gdp_index,134.40819819013927
+United States,USA,2010,emission_index,90.6539159200633
+United States,USA,2010,emission_adj_index,97.17749916513904
+United States,USA,2011,gdp_index,135.50423401085087
+United States,USA,2011,emission_index,87.81057442193267
+United States,USA,2011,emission_adj_index,95.43074139832336
+United States,USA,2012,gdp_index,137.53976222427823
+United States,USA,2012,emission_index,84.02739945811987
+United States,USA,2012,emission_adj_index,91.1460852749114
+United States,USA,2013,gdp_index,139.1061979026531
+United States,USA,2013,emission_index,85.67715871862629
+United States,USA,2013,emission_adj_index,91.89921460881794
+United States,USA,2014,gdp_index,141.57788927462192
+United States,USA,2014,emission_index,85.80204224520304
+United States,USA,2014,emission_adj_index,91.80516314383406
+United States,USA,2015,gdp_index,144.86170553051483
+United States,USA,2015,emission_index,82.92516190344283
+United States,USA,2015,emission_adj_index,89.22107018272865
+United States,USA,2016,gdp_index,146.27702276428232
+United States,USA,2016,emission_index,80.54741012665436
+United States,USA,2016,emission_adj_index,86.7889135535787
+United States,USA,2017,gdp_index,148.74518628150403
+United States,USA,2017,emission_index,79.45009358919619
+United States,USA,2017,emission_adj_index,85.95477249134417
+United States,USA,2018,gdp_index,152.3978908803037
+United States,USA,2018,emission_index,81.53589562283796
+United States,USA,2018,emission_adj_index,88.11303678184511
+United States,USA,2019,gdp_index,154.98410030753718
+United States,USA,2019,emission_index,78.95364875509513
+United States,USA,2019,emission_adj_index,NA
+United States,USA,2020,gdp_index,149.05716140072585
+United States,USA,2020,emission_index,68.82622743719526
+United States,USA,2020,emission_adj_index,NA
