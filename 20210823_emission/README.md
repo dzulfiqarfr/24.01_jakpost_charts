@@ -475,8 +475,8 @@ plot_gdp_co2 <- function(df, name, x, y, color) {
       ),
       labels = c(
         "gdp_index" = "GDP",
-        "emission_index" = "Production-based\nemission",
-        "emission_adj_index" = "Consumption-based\nemission"
+        "emission_index" = "Production-based\nemissions",
+        "emission_adj_index" = "Consumption-based\nemissions"
       )
     ) +
     labs(subtitle = country, x = NULL, y = NULL) +
@@ -513,14 +513,14 @@ plot_list$Indonesia +
   plot_list$`United States` +
   plot_list$China +
   plot_annotation(
-    title = "Indonesia lags behind in decoupling economic growth and emission",
+    title = "Indonesia lags behind in decoupling economic growth and emissions",
     subtitle = paste0(
       "Real GDP per capita, and ",
-      "production and consumption-based CO2 emission per capita*<br>",
+      "production and consumption-based CO2 emissions per capita*<br>",
       "(1990 = 100)"
     ),
     caption = paste0(
-      "\\*Production-based CO2 emissions in 2020 are estimate<br>",
+      "\\*Production-based CO2 emissions in 2020 are estimates<br>",
       paste0(
         "Sources: Our World in Data; Le Quéré et al. 2021; ",
         "Global Carbon Project; UN; *The Jakarta Post* analysis<br>"
