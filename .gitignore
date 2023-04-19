@@ -1,5 +1,1 @@
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
-20210708_wealth-inequality/data/*.xlsx
+.DS_Store
